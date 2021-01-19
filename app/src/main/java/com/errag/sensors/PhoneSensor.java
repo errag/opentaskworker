@@ -7,7 +7,7 @@ import android.telephony.TelephonyManager;
 import com.errag.models.Parameter;
 import com.errag.models.Sensor;
 import com.errag.models.State;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 public class PhoneSensor extends Sensor {
 

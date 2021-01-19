@@ -8,13 +8,13 @@ import android.os.Build;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.State;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 public class FlashAction extends Action {
     @Override
     public boolean exec(Context context, Parameter[] params) throws Exception {
-        boolean flashOn = Boolean.parseBoolean(params[0].getInput());
-        boolean flashOff = Boolean.parseBoolean(params[0].getInput());
+        boolean flashOn = getACBoolean(State.Flash.ON.toString(), params);
+        boolean flashOff = getACBoolean(State.Flash.OFF.toString(), params);
 
         CameraManager cameraManager = (CameraManager)context.getApplicationContext().getSystemService(Context.CAMERA_SERVICE);
 

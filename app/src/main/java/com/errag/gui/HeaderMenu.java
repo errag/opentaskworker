@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 public class HeaderMenu implements View.OnClickListener
 {

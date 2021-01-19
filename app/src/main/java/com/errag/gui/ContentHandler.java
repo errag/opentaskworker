@@ -3,7 +3,7 @@ package com.errag.gui;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 import java.util.TreeMap;
 

@@ -7,14 +7,14 @@ import android.content.pm.ActivityInfo;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.State;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 public class RotateAction extends Action {
 
     @Override
     public boolean exec(Context context, Parameter[] params) throws Exception {
-        boolean orientationPortrait = Boolean.parseBoolean(params[0].getInput());
-        boolean orientationLandscape = Boolean.parseBoolean(params[1].getInput());
+        boolean orientationPortrait = getACBoolean(State.Orientation.PORTRAIT.toString(), params);
+        boolean orientationLandscape = getACBoolean(State.Orientation.LANDSCAPE.toString(), params);
 
         if(orientationPortrait)
             ((Activity)context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

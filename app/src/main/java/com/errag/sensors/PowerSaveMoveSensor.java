@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi;
 import com.errag.models.Parameter;
 import com.errag.models.Sensor;
 import com.errag.models.State;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 public class PowerSaveMoveSensor extends Sensor {
 

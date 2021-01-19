@@ -40,6 +40,9 @@
     <string name="connection_mobile_data">Mobiled data connection</string>
     <string name="connection_disconnected">No connection</string>
 
+    <string name="darkmode_on">Flash ON</string>
+    <string name="darkmode_off">Flash OFF</string>
+
     <string name="flash_on">Flash ON</string>
     <string name="flash_off">Flash OFF</string>
 
@@ -72,9 +75,13 @@
 
     <string name="sms_received">SMS received</string>
     <string name="sms_number">SMS from Number</string>
+    <string name="sms_to_number">Send SMS to Number</string>
+    <string name="sms_message">Message</string>
 
     <string name="usb_connected">USB connected</string>
     <string name="usb_disconnected">USB disconnected</string>
+
+    <string name="vibrator_ms">Vibrator (ms)</string>
 
     <string name="wifi_on">WIFI ON</string>
     <string name="wifi_off">WIFI OFF</string>

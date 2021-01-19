@@ -1,4 +1,4 @@
-package com.spif.opentaskworker;
+package com.errag.opentaskworker;
 
 import android.content.Context;
 

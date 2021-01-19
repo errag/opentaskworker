@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.errag.models.TimerObject;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 import java.util.ArrayList;
 

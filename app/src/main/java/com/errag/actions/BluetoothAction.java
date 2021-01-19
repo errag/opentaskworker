@@ -6,7 +6,7 @@ import android.content.Context;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.State;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 public class BluetoothAction extends Action {
     public BluetoothAction() {
@@ -20,9 +20,9 @@ public class BluetoothAction extends Action {
         boolean bluetoothEnabled = bluetoothAdapter.isEnabled();
 
         // get parameters
-        boolean turnOn = Boolean.parseBoolean(params[0].getInput());
-        boolean turnOff = Boolean.parseBoolean(params[1].getInput());
-        boolean turnToggle = Boolean.parseBoolean(params[2].getInput());
+        boolean turnOn = getACBoolean(State.Bluetooth.ON.toString(), params);
+        boolean turnOff = getACBoolean(State.Bluetooth.OFF.toString(), params);
+        boolean turnToggle = getACBoolean(State.Bluetooth.TOGGLE.toString(), params);
 
         // do action
         if(turnOn || (turnToggle && !bluetoothEnabled))

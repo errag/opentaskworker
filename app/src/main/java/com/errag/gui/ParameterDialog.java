@@ -21,7 +21,7 @@ import androidx.annotation.Nullable;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.SelectionViewItem;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 public class ParameterDialog extends Dialog implements View.OnClickListener {
     enum Close {

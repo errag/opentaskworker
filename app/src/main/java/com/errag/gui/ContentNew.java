@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import com.errag.models.Action;
 import com.errag.models.SelectionViewItem;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 import java.util.ArrayList;
 import java.util.List;

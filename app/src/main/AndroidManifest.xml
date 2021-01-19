@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.spif.opentaskworker">
+    package="com.errag.opentaskworker">
 
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <application
@@ -31,5 +31,6 @@
     <uses-permission android:name = "android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

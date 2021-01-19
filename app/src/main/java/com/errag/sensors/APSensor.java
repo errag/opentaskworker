@@ -7,7 +7,7 @@ import android.net.wifi.WifiManager;
 import com.errag.models.Parameter;
 import com.errag.models.Sensor;
 import com.errag.models.State;
-import com.spif.opentaskworker.R;
+import com.errag.opentaskworker.R;
 
 public class APSensor extends Sensor {
     @Override

@@ -104,6 +104,27 @@ public enum State
         }
     }
 
+    public enum DarkMode {
+        ON,
+        OFF;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
+    public enum Delay {
+        MS;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum Flash {
         ON,
         OFF;
@@ -207,7 +228,9 @@ public enum State
     }
 
     public enum SMS {
-        RECEIVED;
+        RECEIVED,
+        SEND_TO,
+        MESSAGE;
 
         @NonNull
         @Override
@@ -219,6 +242,16 @@ public enum State
     public enum USB {
         CONNECTED,
         DISCONNECTED;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
+    public enum Vibrator {
+        MS;
 
         @NonNull
         @Override

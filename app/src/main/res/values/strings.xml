@@ -32,11 +32,16 @@
 
     <string name="boot_up">Device booted</string>
 
+    <string name="brightness_level">Brightness Level (0-255)</string>
+
     <string name="camera_snap">Photo taken</string>
 
     <string name="connection_wifi">WIFI connection</string>
     <string name="connection_mobile_data">Mobiled data connection</string>
     <string name="connection_disconnected">No connection</string>
+
+    <string name="flash_on">Flash ON</string>
+    <string name="flash_off">Flash OFF</string>
 
     <string name="gps_on">GPS ON</string>
     <string name="gps_off">GPS OFF</string>

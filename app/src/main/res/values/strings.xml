@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Open Task Worker</string>
+    <string name="new_trigger_list">Select the triggers for your task:</string>
+    <string name="new_actions_list">List of available actions:</string>
+    <string name="new_actions_selection">Your selected actions:</string>
+    <string name="dialog_parameter_header">Please select your trigger/action:</string>
+    <string name="new_task_name">Name of your Task</string>
+    <string name="dialog_parameter_button_save">SAVE</string>
+    <string name="dialog_parameter_button_delete">DELETE</string>
+    <string name="header_new_trigger">TRIGGER</string>
+    <string name="header_new_action">ACTION</string>
+
+    <!-- ACTION -->
+    <string name="delay_time">Delay (ms)</string>
+
+
+    <!-- SENSOR -->
+    <string name="airplane_mode_on">Airplain Mode ON</string>
+    <string name="airplane_mode_off">Airplain Mode OFF</string>
+
+    <string name="ap_on">Hotspot ON</string>
+    <string name="ap_off">Hotspot OFF</string>
+
+    <string name="batter_level_changed">Batterlevel changed to</string>
+
+    <string name="batter_charging">Batter charching</string>
+    <string name="batter_discharching">Batter discharching</string>
+
+    <string name="bluetooth_on">Bluetooth ON</string>
+    <string name="bluetooth_off">Bluetooth OFF</string>
+    <string name="bluetooth_toggle">Bluetooth TOGGLE</string>
+
+    <string name="boot_up">Device booted</string>
+
+    <string name="camera_snap">Photo taken</string>
+
+    <string name="connection_wifi">WIFI connection</string>
+    <string name="connection_mobile_data">Mobiled data connection</string>
+    <string name="connection_disconnected">No connection</string>
+
+    <string name="gps_on">GPS ON</string>
+    <string name="gps_off">GPS OFF</string>
+
+    <string name="interruption_alarms">Interruption ALARM</string>
+    <string name="interruption_none">Interruption NONE</string>
+    <string name="interruption_all">Interruption ALL</string>
+    <string name="interruption_priority">Interruption PRIORITY</string>
+    <string name="interruption_unknown">Interruption UNKNOWN</string>
+
+    <string name="orientation_portrait">Orientation PORTRAIT</string>
+    <string name="orientation_landscape">Orientation LANDSCAPE</string>
+
+    <string name="outgoingcall_started">Outgoingcall started</string>
+
+    <string name="phone_idle">Phone idle</string>
+    <string name="phone_ringing">Phone ringing</string>
+    <string name="phone_offhock">Phone offhock</string>
+
+    <string name="phone_number">Phone-Number</string>
+
+    <string name="powersavemode_on">Powersave-Mode ON</string>
+    <string name="powersavemode_off">Powersave-Mode OFF</string>
+
+    <string name="screen_on">Screen ON</string>
+
+    <string name="screen_off">Screen OFF</string>
+
+    <string name="sms_received">SMS received</string>
+    <string name="sms_number">SMS from Number</string>
+
+    <string name="usb_connected">USB connected</string>
+    <string name="usb_disconnected">USB disconnected</string>
+
+    <string name="wifi_on">WIFI ON</string>
+    <string name="wifi_off">WIFI OFF</string>
+    <string name="wifi_toggle">WIFI Toggle</string>
+    <string name="wifi_ssid">Connected SSID</string>
+
+</resources>

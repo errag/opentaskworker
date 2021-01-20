@@ -2,7 +2,7 @@ package com.errag.models;
 
 public abstract class SelectionViewItem {
 
-    private Parameter[] inputParameter = null;
+    protected Parameter[] inputParameter = null;
 
     public abstract int getImage();
     public abstract Parameter[] setInputParameter();

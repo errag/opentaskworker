@@ -16,4 +16,9 @@ public class ContentTasks extends ContentElement {
     public void updateUI() {
 
     }
+
+    @Override
+    public MODULE getModule() {
+        return MODULE.TASKS;
+    }
 }

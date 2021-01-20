@@ -25,7 +25,7 @@ public class VibratorAction extends Action {
 
     @Override
     public int getImage() {
-        return 0;
+        return R.drawable.img_vibrate;
     }
 
     @Override

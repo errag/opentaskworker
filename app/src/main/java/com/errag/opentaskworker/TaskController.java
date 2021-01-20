@@ -8,6 +8,7 @@ import com.errag.actions.WifiAction;
 import com.errag.models.Action;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Sensor;
+import com.errag.models.Variable;
 import com.errag.sensors.APSensor;
 import com.errag.sensors.AirplainModeSensor;
 import com.errag.sensors.BatteryLevelSensor;
@@ -37,12 +38,14 @@ import java.util.List;
 import dalvik.system.DexFile;
 
 public class TaskController {
-    private final static String SENSOR_PKG = "com.errag.sensors";
-    private final static String ACTION_PKG = "com.errag.actions";
+    private final static String SENSOR_PKG      = "com.errag.sensors";
+    private final static String ACTION_PKG      = "com.errag.actions";
+    private final static String VARIABLE_PKG    = "com.errag.variables";
 
     private Context context = null;
     private ArrayList<Action> actions = new ArrayList<>();
     private ArrayList<Sensor> sensors = new ArrayList<>();
+    private ArrayList<Variable> variables = new ArrayList<>();
 
     public TaskController(Context _context) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
         this.context = _context;
@@ -55,13 +58,15 @@ public class TaskController {
         for (Enumeration<String> iter = df.entries(); iter.hasMoreElements();) {
             String className = iter.nextElement();
 
-            if(className.startsWith(ACTION_PKG) || className.startsWith(SENSOR_PKG)) {
+            if(className.startsWith(ACTION_PKG) || className.startsWith(SENSOR_PKG) || className.startsWith(VARIABLE_PKG)) {
                 Class<?> classObj = Class.forName(className);
 
                 if(className.startsWith(ACTION_PKG))
                     actions.add((Action)classObj.newInstance());
-                else
+                else if(className.startsWith(SENSOR_PKG))
                     sensors.add((Sensor)classObj.newInstance());
+                else
+                    variables.add((Variable)classObj.newInstance());
             }
         }
     }
@@ -80,62 +85,15 @@ public class TaskController {
         return actionSensor;
     }
 
-    //
     public Action[] getActions() {
         return this.actions.toArray(new Action[this.actions.size()]);
     }
 
-    public Action[] getAvailableActions() {
-        try {
-            DexFile df = new DexFile(context.getPackageCodePath());
-            System.out.println("*** " + context.getPackageCodePath());
-
-            for (Enumeration<String> iter = df.entries(); iter.hasMoreElements();) {
-                String s = iter.nextElement();
-
-                if(s.contains(".actions."))
-                    System.out.println(s);
-            }
-
-        } catch(Exception ex) {
-
-        }
-
-        List<Action> availableActions = new ArrayList<>();
-        availableActions.add(new BluetoothAction());
-        availableActions.add(new DelayAction());
-        availableActions.add(new WifiAction());
-
-        return availableActions.toArray(new Action[availableActions.size()]);
-    }
-
-    //
     public Sensor[] getSensors() {
         return this.sensors.toArray(new Sensor[this.sensors.size()]);
     }
 
-    public Sensor[] getAvailableSensors() {
-        List<Sensor> availableSensors = new ArrayList<>();
-        availableSensors.add(new AirplainModeSensor());
-        availableSensors.add(new APSensor());
-        availableSensors.add(new BatteryLevelSensor());
-        availableSensors.add(new BatterySensor());
-        availableSensors.add(new BluetoothSensor());
-        availableSensors.add(new BootSensor());
-        availableSensors.add(new CameraSensor());
-        availableSensors.add(new ConnectionSensor());
-        availableSensors.add(new GPSSensor());
-        availableSensors.add(new InterruptionSensor());
-        availableSensors.add(new OrientationSensor());
-        availableSensors.add(new OutgoingCallSensor());
-        availableSensors.add(new PhoneSensor());
-        availableSensors.add(new PowerSaveMoveSensor());
-        availableSensors.add(new ScreenOffSensor());
-        availableSensors.add(new ScreenOnSensor());
-        availableSensors.add(new SMSSensor());
-        availableSensors.add(new USBSensor());
-        availableSensors.add(new WifiSensor());
-
-        return availableSensors.toArray(new Sensor[availableSensors.size()]);
+    public Variable[] getVariables() {
+        return this.variables.toArray(new Variable[this.variables.size()]);
     }
 }

@@ -27,12 +27,6 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
     private HorizontalScrollView viewActionSelection = null;
     private LinearLayout viewActionSelectionLayout = null;
 
-    private List<ImageButton> triggerButtons = null;
-
-    private final static int TASK_NON_SELECTED = R.drawable.tasks_button;
-    private final static int TASK_TRIGGER = R.drawable.tasks_button_trigger;
-    private final static int TASK_ACTION = R.drawable.tasks_button_action;
-
     @Override
     protected void doInit() {
         viewTriggerList = (HorizontalScrollView)this.guiAction.getActivity().findViewById(R.id.scrollNewTriggerList);
@@ -44,12 +38,12 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
         viewActionSelectionLayout = (LinearLayout)viewActionSelection.getChildAt(0);
 
         SelectionViewItem[] availableSensors = this.guiAction.getTaskController().getSensors();
-        generateSelectionView(viewTriggerList, viewTriggerLayout, availableSensors);
+        generateSelectionView(viewTriggerList, viewTriggerLayout, availableSensors, this);
 
         SelectionViewItem[] availableActions = this.guiAction.getTaskController().getActions();
-        generateSelectionView(viewActionList, viewActionLayout, availableActions);
+        generateSelectionView(viewActionList, viewActionLayout, availableActions, this);
 
-        generateSelectionView(viewActionSelection, viewActionSelectionLayout, null);
+        generateSelectionView(viewActionSelection, viewActionSelectionLayout, null, this);
 
         initListeners();
     }
@@ -71,7 +65,7 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
 
     private void initListeners() {
         viewActionSelection.setOnDragListener((v, event) -> {
-            if(event.getAction() == DragEvent.ACTION_DROP ) {
+            if(event.getAction() == DragEvent.ACTION_DROP) {
                 View view = (View)event.getLocalState();
                 ViewGroup owner = (ViewGroup)view.getParent();
                 owner.removeView(view);
@@ -103,7 +97,7 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
             if(action.hasSelection()) {
                 Action clone = Action.createByMove(action);
 
-                View button = getSelectionViewButton(clone,true);
+                View button = getSelectionViewButton(clone, this,true);
                 button.setBackgroundResource(TASK_ACTION);
                 this.viewActionSelectionLayout.addView(button);
             }
@@ -115,58 +109,14 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
             viewActionSelectionLayout.removeView(view);
     }
 
-    private void generateSelectionView(HorizontalScrollView scrollLayout, LinearLayout layout, SelectionViewItem[] items)
-    {
-        triggerButtons = new ArrayList<>();
-
-        scrollLayout.setBackgroundResource(R.drawable.tasks_list);
-        layout.setPadding(10, 20, 10, 20);
-
-        if(items != null)
-        {
-            for(SelectionViewItem item : items) {
-                item.resetInputParameter();
-                ImageButton button = getSelectionViewButton(item, false);
-                layout.addView(button);
-            }
-        }
-    }
-
-    public ImageButton getSelectionViewButton(SelectionViewItem item, boolean dragable) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(20, 0, 10, 0);
-
-        ImageButton button = new ImageButton(this.guiAction.getActivity());
-        button.setTag(item);
-        button.setLayoutParams(params);
-        setImageButtonTriggerStyle(button, TASK_NON_SELECTED, TASK_TRIGGER);
-        button.setImageResource(item.getImage());
-        button.setAlpha((float)0.95);
-        button.setOnClickListener(this);
-
-        if(dragable) {
-            button.setOnLongClickListener(v -> {
-                ClipData data = ClipData.newPlainText("", "");
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
-                v.startDrag(data, shadowBuilder, v, 0);
-                return true;
-            });
-        }
-
-        return button;
-    }
-
-    private void setImageButtonTriggerStyle(View button, int notSelected, int selected) {
-        SelectionViewItem item = (SelectionViewItem)button.getTag();
-        button.setBackgroundResource(!item.hasSelection() ? notSelected : selected);
-    }
-
     @Override
     public void onClick(View v) {
         ParameterDialog parameterDialog = new ParameterDialog(this.guiAction, v);
         parameterDialog.show();
+    }
+
+    @Override
+    public MODULE getModule() {
+        return MODULE.NEW_TASK;
     }
 }

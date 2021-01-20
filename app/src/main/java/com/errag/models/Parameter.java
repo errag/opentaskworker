@@ -4,6 +4,7 @@ public class Parameter {
     public enum Type {
         BOOLEAN,
         INTEGER,
+        PASSWORD,
         STRING
     }
 

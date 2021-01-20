@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.SelectionViewItem;
+import com.errag.models.Variable;
 import com.errag.opentaskworker.R;
 
 public class ParameterDialog extends Dialog implements View.OnClickListener {
@@ -80,6 +81,11 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
                 AC = GuiAction.AC.NEW_ACTION;
             else
                 AC = GuiAction.AC.NEW_ACTION_DELETE;
+        } else if(this.selectionViewItem instanceof Variable) {
+            if(mode.equals(Close.SAVE))
+                AC = GuiAction.AC.SETTING_NEW_VARIABLE;
+            else
+                AC = GuiAction.AC.SETTING_DELETE_VARIABLE;
         }
 
         this.dismiss();

@@ -9,6 +9,9 @@
     <string name="dialog_parameter_button_delete">DELETE</string>
     <string name="header_new_trigger">TRIGGER</string>
     <string name="header_new_action">ACTION</string>
+    <string name="header_settings_variables">VARIABLES</string>
+    <string name="setting_variables">Available variable-types:</string>
+    <string name="header_setting_donate">DONATE / SUPPORT:</string>
 
     <!-- ACTION -->
     <string name="delay_time">Delay (ms)</string>
@@ -40,8 +43,14 @@
     <string name="connection_mobile_data">Mobiled data connection</string>
     <string name="connection_disconnected">No connection</string>
 
-    <string name="darkmode_on">Flash ON</string>
-    <string name="darkmode_off">Flash OFF</string>
+    <string name="darkmode_on">Darkmode ON</string>
+    <string name="darkmode_off">Darkmode OFF</string>
+
+    <string name="email_server">SMTP-Server</string>
+    <string name="email_port">SMTP-Port</string>
+    <string name="email_auth">use authentification</string>
+    <string name="email_username">SMTP-Username</string>
+    <string name="email_password">SMTP-Password</string>
 
     <string name="flash_on">Flash ON</string>
     <string name="flash_off">Flash OFF</string>
@@ -54,6 +63,8 @@
     <string name="interruption_all">Interruption ALL</string>
     <string name="interruption_priority">Interruption PRIORITY</string>
     <string name="interruption_unknown">Interruption UNKNOWN</string>
+
+    <string name="number_input">Number value</string>
 
     <string name="orientation_portrait">Orientation PORTRAIT</string>
     <string name="orientation_landscape">Orientation LANDSCAPE</string>
@@ -78,8 +89,12 @@
     <string name="sms_to_number">Send SMS to Number</string>
     <string name="sms_message">Message</string>
 
+    <string name="string_input">String value:</string>
+
     <string name="usb_connected">USB connected</string>
     <string name="usb_disconnected">USB disconnected</string>
+
+    <string name="variable_name">Variable Name</string>
 
     <string name="vibrator_ms">Vibrator (ms)</string>
 

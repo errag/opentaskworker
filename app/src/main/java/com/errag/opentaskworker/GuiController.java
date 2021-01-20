@@ -7,6 +7,7 @@ import android.widget.Button;
 import com.errag.gui.ContentElement;
 import com.errag.gui.ContentHandler;
 import com.errag.gui.ContentNew;
+import com.errag.gui.ContentSettings;
 import com.errag.gui.GuiAction;
 import com.errag.gui.HeaderMenu;
 
@@ -43,6 +44,10 @@ public class GuiController implements GuiAction {
                 ((ContentNew)currentContent).addAction(view);
             else if(parameter.equals(AC.NEW_ACTION_DELETE))
                 ((ContentNew)currentContent).removeAction(view);
+            else if(parameter.equals(AC.SETTING_NEW_VARIABLE))
+                ((ContentSettings)currentContent).addVariable(view);
+            else if(parameter.equals(AC.SETTING_DELETE_VARIABLE))
+                ((ContentSettings)currentContent).removeVariable(view);
 
             currentContent.updateUI();
         } catch(Exception ex) {

@@ -3,10 +3,12 @@ package com.errag.opentaskworker;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.errag.gui.ContentElement;
 import com.errag.gui.ContentHandler;
 import com.errag.gui.ContentNew;
+import com.errag.gui.ContentSettings;
 import com.errag.gui.GuiAction;
 import com.errag.gui.HeaderMenu;
 
@@ -43,6 +45,10 @@ public class GuiController implements GuiAction {
                 ((ContentNew)currentContent).addAction(view);
             else if(parameter.equals(AC.NEW_ACTION_DELETE))
                 ((ContentNew)currentContent).removeAction(view);
+            else if(parameter.equals(AC.SETTING_NEW_VARIABLE))
+                ((ContentSettings)currentContent).addVariable(view);
+            else if(parameter.equals(AC.SETTING_DELETE_VARIABLE))
+                ((ContentSettings)currentContent).removeVariable(view);
 
             currentContent.updateUI();
         } catch(Exception ex) {
@@ -58,6 +64,11 @@ public class GuiController implements GuiAction {
             this.changeHeaderMenu(target, parameter);
         else if(action.equals(AC.DIALOG_CLOSE))
             this.refreshCurrentPanel(parameter, target);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG);
     }
 
     @Override

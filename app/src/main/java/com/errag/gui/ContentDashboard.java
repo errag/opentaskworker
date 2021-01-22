@@ -16,4 +16,9 @@ public class ContentDashboard extends ContentElement {
     public void updateUI() {
 
     }
+
+    @Override
+    public MODULE getModule() {
+        return MODULE.DASHBOARD;
+    }
 }

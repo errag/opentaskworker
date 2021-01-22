@@ -27,14 +27,14 @@ public class EventController extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         String action = intent.getAction();
-        Sensor sensor = taskController.getSensorByAction(action);
-        String state = sensor.getState(context, intent);
+        //Sensor sensor = taskController.getSensorByAction(action);
+        //String state = sensor.getState(context, intent);
 
-        System.out.println(action + " = " + state);
+        //System.out.println(action + " = " + state);
     }
 
     public void addReceiver() {
-        for(Sensor sensor : taskController.getSensors())
-            this.context.registerReceiver(this, sensor.getIntentFilter());
+        //for(Sensor sensor : taskController.getSensors())
+         //   this.context.registerReceiver(this, sensor.getIntentFilter());
     }
 }

@@ -41,7 +41,7 @@ public class ContentHandler {
         if(contents.containsKey(layoutAC))
         {
             for(ContentElement content : contents.values())
-                content.getLayout().setVisibility(View.INVISIBLE);
+                content.getLayout().setVisibility(View.GONE);
 
             contents.get(layoutAC).getLayout().setVisibility(View.VISIBLE);
             currentContentElement = contents.get(layoutAC);

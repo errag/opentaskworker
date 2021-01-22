@@ -21,12 +21,14 @@ import androidx.annotation.Nullable;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.SelectionViewItem;
+import com.errag.models.Variable;
 import com.errag.opentaskworker.R;
 
 public class ParameterDialog extends Dialog implements View.OnClickListener {
     enum Close {
         SAVE,
-        DELETE
+        DELETE,
+        TEST
     }
 
     private final static int THEME = R.layout.dialog_parameter;
@@ -41,6 +43,7 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
         this.guiAction = _guiAction;
         this.view = _view;
         this.selectionViewItem = (SelectionViewItem)this.view.getTag();
+        this.selectionViewItem.askForPermissions(this.guiAction.getActivity());
         this.parameters = this.selectionViewItem.getInputParameters();
 
         this.setCanceledOnTouchOutside(false);
@@ -80,10 +83,17 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
                 AC = GuiAction.AC.NEW_ACTION;
             else
                 AC = GuiAction.AC.NEW_ACTION_DELETE;
+        } else if(this.selectionViewItem instanceof Variable) {
+            if(mode.equals(Close.SAVE))
+                AC = GuiAction.AC.SETTING_NEW_VARIABLE;
+            else
+                AC = GuiAction.AC.SETTING_DELETE_VARIABLE;
         }
 
         this.dismiss();
-        this.guiAction.sendGuiAction(GuiAction.AC.DIALOG_CLOSE, AC, this.view, null);
+
+        if(this.view != null)
+            this.guiAction.sendGuiAction(GuiAction.AC.DIALOG_CLOSE, AC, this.view, null);
     }
 
     private void initDialog() {
@@ -192,9 +202,16 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
     private void initListeners() {
         Button buttonSave = (Button)this.findViewById(R.id.btnParameterSave);
         Button buttonDelete = (Button)this.findViewById(R.id.btnParameterDelete);
+        Button buttonTest = (Button)this.findViewById(R.id.btnParameterTest);
 
         buttonSave.setOnClickListener(onClickSave());
         buttonDelete.setOnClickListener(onClickDelete());
+        buttonTest.setOnClickListener(onClickTest());
+
+        if(this.selectionViewItem instanceof Action)
+            buttonTest.setVisibility(View.VISIBLE);
+        else
+            buttonTest.setVisibility(View.GONE);
     }
 
     private View.OnClickListener onClickSave() {
@@ -212,6 +229,23 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
             public void onClick(View v) {
                 clearDialogParamterItem();
                 closeDialog(Close.DELETE);
+            }
+        };
+    }
+
+    private View.OnClickListener onClickTest() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (selectionViewItem instanceof Action) {
+                        Action action = (Action) selectionViewItem;
+                        action.exec(guiAction.getActivity(), selectionViewItem.getInputParameters());
+                    }
+                } catch(Exception ex) {
+                    // TODO error-handling
+                    ex.printStackTrace();
+                }
             }
         };
     }

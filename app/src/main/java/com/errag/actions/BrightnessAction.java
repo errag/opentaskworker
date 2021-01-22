@@ -1,5 +1,6 @@
 package com.errag.actions;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.provider.Settings;
@@ -7,6 +8,7 @@ import android.provider.Settings;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.State;
+import com.errag.opentaskworker.PermissionController;
 import com.errag.opentaskworker.R;
 
 public class BrightnessAction extends Action {
@@ -20,6 +22,11 @@ public class BrightnessAction extends Action {
         }
 
         return true;
+    }
+
+    @Override
+    public void askForPermissions(Activity activity) {
+        PermissionController.askForWriteSettings(activity);
     }
 
     @Override

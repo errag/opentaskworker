@@ -9,6 +9,7 @@ public interface GuiAction {
     public Activity getActivity();
     public TaskController getTaskController();
     public void sendGuiAction(AC action, AC parameter, View target, View.OnClickListener source);
+    public void showMessage(String message);
 
     public enum AC {
         CHANGE_MENU,
@@ -21,6 +22,11 @@ public interface GuiAction {
 
         NEW_TRIGGER,
         NEW_ACTION,
-        NEW_ACTION_DELETE
+        NEW_ACTION_DELETE,
+
+        SETTING_NEW_VARIABLE,
+        SETTING_DELETE_VARIABLE,
+
+        VIEW_REFRESH
     }
 }

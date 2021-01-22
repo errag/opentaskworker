@@ -4,12 +4,16 @@ import android.content.ClipData;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.errag.models.Action;
 import com.errag.models.SelectionViewItem;
+import com.errag.models.Sensor;
+import com.errag.models.Task;
 import com.errag.opentaskworker.R;
 
 import java.util.ArrayList;
@@ -26,26 +30,40 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
     private LinearLayout viewActionLayout = null;
     private HorizontalScrollView viewActionSelection = null;
     private LinearLayout viewActionSelectionLayout = null;
+    private EditText editTextTaskName = null;
+    private Button buttonTaskSave = null;
 
     @Override
     protected void doInit() {
-        viewTriggerList = (HorizontalScrollView)this.guiAction.getActivity().findViewById(R.id.scrollNewTriggerList);
-        viewActionList = (HorizontalScrollView)this.guiAction.getActivity().findViewById(R.id.scrollNewActionList);
-        viewActionSelection = (HorizontalScrollView)this.guiAction.getActivity().findViewById(R.id.scrollNewActionSelection);
+        try {
+            if (!this.isInit) {
+                editTextTaskName = (EditText) this.guiAction.getActivity().findViewById(R.id.editTextNewTaskName);
+                buttonTaskSave = (Button) this.guiAction.getActivity().findViewById(R.id.buttonNewSaveTask);
 
-        viewTriggerLayout = (LinearLayout)viewTriggerList.getChildAt(0);
-        viewActionLayout = (LinearLayout)viewActionList.getChildAt(0);
-        viewActionSelectionLayout = (LinearLayout)viewActionSelection.getChildAt(0);
+                viewTriggerList = (HorizontalScrollView) this.guiAction.getActivity().findViewById(R.id.scrollNewTriggerList);
+                viewActionList = (HorizontalScrollView) this.guiAction.getActivity().findViewById(R.id.scrollNewActionList);
+                viewActionSelection = (HorizontalScrollView) this.guiAction.getActivity().findViewById(R.id.scrollNewActionSelection);
 
-        SelectionViewItem[] availableSensors = this.guiAction.getTaskController().getSensors();
-        generateSelectionView(viewTriggerList, viewTriggerLayout, availableSensors, this);
+                viewTriggerLayout = (LinearLayout) viewTriggerList.getChildAt(0);
+                viewActionLayout = (LinearLayout) viewActionList.getChildAt(0);
+                viewActionSelectionLayout = (LinearLayout) viewActionSelection.getChildAt(0);
 
-        SelectionViewItem[] availableActions = this.guiAction.getTaskController().getActions();
-        generateSelectionView(viewActionList, viewActionLayout, availableActions, this);
+                initListeners();
+            }
 
-        generateSelectionView(viewActionSelection, viewActionSelectionLayout, null, this);
+            editTextTaskName.setText("");
 
-        initListeners();
+            SelectionViewItem[] availableSensors = this.guiAction.getTaskController().getAvailableSensors();
+            generateSelectionView(viewTriggerList, viewTriggerLayout, availableSensors, this);
+
+            SelectionViewItem[] availableActions = this.guiAction.getTaskController().getAvailableActions();
+            generateSelectionView(viewActionList, viewActionLayout, availableActions, this);
+
+            generateSelectionView(viewActionSelection, viewActionSelectionLayout, null, this);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+            this.guiAction.showMessage(ex.getMessage());
+        }
     }
 
     @Override
@@ -87,6 +105,42 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
             }
 
             return true;
+        });
+
+        buttonTaskSave.setOnClickListener(v -> {
+            try {
+                String taskName = editTextTaskName.getText().toString();
+
+                if (taskName.length() == 0) {
+                    throw new Exception(this.guiAction.getActivity().getString(R.string.error_emtpy_filename));
+                } else {
+                    List<Sensor> sensors = new ArrayList<>();
+                    List<Action> actions = new ArrayList<>();
+
+                    for(int i=0; i<viewTriggerLayout.getChildCount(); i++)
+                    {
+                        Sensor sensor = (Sensor)viewTriggerLayout.getChildAt(i).getTag();
+
+                        if(sensor.hasSelection())
+                            sensors.add(sensor);
+                    }
+
+                    for(int i=0; i<viewActionSelectionLayout.getChildCount(); i++)
+                    {
+                        Action action = (Action)viewActionSelectionLayout.getChildAt(i).getTag();
+
+                        if(action.hasSelection());
+                            actions.add(action);
+                    }
+
+                    this.guiAction.getTaskController().addTask(taskName, sensors, actions);
+
+                    doInit();
+                }
+            } catch(Exception ex) {
+                ex.printStackTrace();
+                this.guiAction.showMessage(ex.getMessage());
+            }
         });
     }
 

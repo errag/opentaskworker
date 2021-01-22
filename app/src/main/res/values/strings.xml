@@ -14,11 +14,9 @@
     <string name="setting_variables">Available variable-types:</string>
     <string name="header_setting_donate">DONATE / SUPPORT:</string>
 
-    <!-- ACTION -->
-    <string name="delay_time">Delay (ms)</string>
+    <string name="error_emtpy_filename">Filname is empty!</string>
 
-
-    <!-- SENSOR -->
+    <!-- ACTION / SENSOR / VARIABLE -->
     <string name="airplane_mode_on">Airplain Mode ON</string>
     <string name="airplane_mode_off">Airplain Mode OFF</string>
 
@@ -46,6 +44,8 @@
 
     <string name="darkmode_on">Darkmode ON</string>
     <string name="darkmode_off">Darkmode OFF</string>
+
+    <string name="delay_time">Delay (ms)</string>
 
     <string name="email_server">SMTP-Server</string>
     <string name="email_port">SMTP-Port</string>

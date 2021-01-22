@@ -135,7 +135,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:visibility="gone">
 
                 <TextView
                     android:id="@+id/textSettingVariablesHeader"
@@ -195,7 +196,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -220,7 +221,8 @@
                         android:layout_weight="1"
                         android:background="#8BC34A"
                         android:backgroundTint="#8BC34A"
-                        android:text="@string/dialog_parameter_button_save" />
+                        android:text="@string/dialog_parameter_button_save"
+                        app:iconTint="#00BD5C5C" />
                 </LinearLayout>
 
                 <TextView

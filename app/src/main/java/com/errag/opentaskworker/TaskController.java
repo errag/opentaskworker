@@ -8,6 +8,8 @@ import com.errag.actions.WifiAction;
 import com.errag.models.Action;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Sensor;
+import com.errag.models.Settings;
+import com.errag.models.Task;
 import com.errag.models.Variable;
 import com.errag.sensors.APSensor;
 import com.errag.sensors.AirplainModeSensor;
@@ -30,8 +32,10 @@ import com.errag.sensors.USBSensor;
 import com.errag.sensors.WifiSensor;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -43,57 +47,95 @@ public class TaskController {
     private final static String VARIABLE_PKG    = "com.errag.variables";
 
     private Context context = null;
-    private ArrayList<Action> actions = new ArrayList<>();
-    private ArrayList<Sensor> sensors = new ArrayList<>();
-    private ArrayList<Variable> variables = new ArrayList<>();
+    private DataController dataController = null;
+    private List<Task> tasks = null;
+    private Settings settings = null;
 
     public TaskController(Context _context) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
         this.context = _context;
-        this.loadTaskElements();
+        this.dataController = new DataController(this.context);
+        this.tasks = dataController.loadTasks();
+        this.settings = dataController.loadSettings();
     }
 
-    private void loadTaskElements() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException {
+    public boolean addTask(String name, List<Sensor> sensors, List<Action> actions) throws Exception {
+        this.tasks.add(new Task(name, sensors, actions));
+        this.saveTasks();
+
+        return true;
+    }
+
+    public boolean addVariable(Variable variable) {
+        this.settings.getVariables().add(variable);
+        this.saveSettings();
+
+        return true;
+    }
+
+    public boolean containerVariable(Variable variable) {
+        boolean contains = this.settings.getVariables().contains(variable);
+
+        if(contains)
+            this.saveSettings();
+
+        return contains;
+    }
+
+    public boolean removeVariable(Variable variable) {
+        this.settings.removeVariable(variable);
+        this.saveSettings();
+
+        return true;
+    }
+
+    //
+    private void saveTasks() {
+        this.dataController.saveTasks(this.tasks);
+    }
+
+    private void saveSettings() {
+        this.dataController.saveSettings(this.settings);
+    }
+
+    //
+    public List<Variable> getUsedVariables() {
+        return this.settings.getVariables();
+    }
+
+    public Action[] getAvailableActions() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException  {
+        Object[] elements = loadTaskElements(ACTION_PKG);
+
+        return Arrays.copyOf(elements, elements.length, Action[].class);
+    }
+
+    public Sensor[] getAvailableSensors() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException  {
+        Object[] elements = loadTaskElements(SENSOR_PKG);
+
+        return Arrays.copyOf(elements, elements.length, Sensor[].class);
+    }
+
+    public Variable[] getAvailableVariables() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException  {
+        Object[] elements = loadTaskElements(VARIABLE_PKG);
+
+        return Arrays.copyOf(elements, elements.length, Variable[].class);
+    }
+
+    private Object[] loadTaskElements(String pkg) throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException {
+        List<SelectionViewItem> items = new ArrayList<>();
         DexFile df = new DexFile(this.context.getPackageCodePath());
 
         for (Enumeration<String> iter = df.entries(); iter.hasMoreElements();) {
             String className = iter.nextElement();
 
-            if(className.startsWith(ACTION_PKG) || className.startsWith(SENSOR_PKG) || className.startsWith(VARIABLE_PKG)) {
+            if(className.startsWith(pkg)) {
                 Class<?> classObj = Class.forName(className);
 
-                if(className.startsWith(ACTION_PKG))
-                    actions.add((Action)classObj.newInstance());
-                else if(className.startsWith(SENSOR_PKG))
-                    sensors.add((Sensor)classObj.newInstance());
-                else
-                    variables.add((Variable)classObj.newInstance());
-            }
-        }
-    }
-
-    public Sensor getSensorByAction(String action) {
-        Sensor actionSensor = null;
-
-        for(Sensor sensor : sensors) {
-            if(sensor.isAction(action))
-            {
-                actionSensor = sensor;
-                break;
+                if(className.startsWith(pkg))
+                    items.add((SelectionViewItem) classObj.newInstance());
             }
         }
 
-        return actionSensor;
+        return items.toArray();
     }
 
-    public Action[] getActions() {
-        return this.actions.toArray(new Action[this.actions.size()]);
-    }
-
-    public Sensor[] getSensors() {
-        return this.sensors.toArray(new Sensor[this.sensors.size()]);
-    }
-
-    public Variable[] getVariables() {
-        return this.variables.toArray(new Variable[this.variables.size()]);
-    }
 }

@@ -9,6 +9,7 @@ public interface GuiAction {
     public Activity getActivity();
     public TaskController getTaskController();
     public void sendGuiAction(AC action, AC parameter, View target, View.OnClickListener source);
+    public void showMessage(String message);
 
     public enum AC {
         CHANGE_MENU,

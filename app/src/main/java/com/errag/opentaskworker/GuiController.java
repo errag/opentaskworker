@@ -3,6 +3,7 @@ package com.errag.opentaskworker;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.errag.gui.ContentElement;
 import com.errag.gui.ContentHandler;
@@ -63,6 +64,11 @@ public class GuiController implements GuiAction {
             this.changeHeaderMenu(target, parameter);
         else if(action.equals(AC.DIALOG_CLOSE))
             this.refreshCurrentPanel(parameter, target);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG);
     }
 
     @Override

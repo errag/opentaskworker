@@ -40,9 +40,9 @@ public abstract class ContentElement {
 
     public void init(GuiAction _guiAction) {
         if(!isInit()) {
-            this.isInit = true;
             this.guiAction = _guiAction;
             doInit();
+            this.isInit = true;
         }
     }
 
@@ -61,6 +61,7 @@ public abstract class ContentElement {
     {
         scrollLayout.setBackgroundResource(R.drawable.tasks_list);
         layout.setPadding(10, 20, 10, 20);
+        layout.removeAllViews();
 
         if(items != null)
         {

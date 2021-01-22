@@ -91,7 +91,9 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
         }
 
         this.dismiss();
-        this.guiAction.sendGuiAction(GuiAction.AC.DIALOG_CLOSE, AC, this.view, null);
+
+        if(this.view != null)
+            this.guiAction.sendGuiAction(GuiAction.AC.DIALOG_CLOSE, AC, this.view, null);
     }
 
     private void initDialog() {

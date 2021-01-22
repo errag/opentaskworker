@@ -2,6 +2,7 @@ package com.errag.gui;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -13,8 +14,9 @@ import com.errag.opentaskworker.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class ContentSettings extends ContentElement implements View.OnClickListener {
+public class ContentSettings extends ContentElement implements View.OnClickListener, AdapterView.OnItemClickListener {
     public ContentSettings(LinearLayout _layout) {
         super(_layout);
     }
@@ -27,30 +29,53 @@ public class ContentSettings extends ContentElement implements View.OnClickListe
 
     @Override
     protected void doInit() {
-        viewVariablesList = (HorizontalScrollView)this.guiAction.getActivity().findViewById(R.id.scrollSettingVariables);
-        viewVariablesLayout = (LinearLayout)viewVariablesList.getChildAt(0);
-        listViewVariables = (ListView)this.guiAction.getActivity().findViewById(R.id.listViewSettingVariables);
+        try {
+            if(!isInit) {
+                viewVariablesList = (HorizontalScrollView) this.guiAction.getActivity().findViewById(R.id.scrollSettingVariables);
+                viewVariablesLayout = (LinearLayout) viewVariablesList.getChildAt(0);
+                listViewVariables = (ListView) this.guiAction.getActivity().findViewById(R.id.listViewSettingVariables);
 
-        SelectionViewItem[] availableVariables = this.guiAction.getTaskController().getVariables();
-        generateSelectionView(viewVariablesList, viewVariablesLayout, availableVariables, this);
+                listViewVariables.setAdapter(adapter);
+                listViewVariables.setOnItemClickListener(this);
+            }
 
-        adapter = new VariableAdapter(new ArrayList<>(), this.guiAction.getActivity());
-        listViewVariables.setAdapter(adapter);
+            SelectionViewItem[] availableVariables = this.guiAction.getTaskController().getAvailableVariables();
+            generateSelectionView(viewVariablesList, viewVariablesLayout, availableVariables, this);
+
+            adapter = new VariableAdapter(
+                    new ArrayList<>(this.guiAction.getTaskController().getUsedVariables()),
+                    this.guiAction.getActivity()
+            );
+            listViewVariables.setAdapter(adapter);
+
+        } catch(Exception ex) {
+            this.guiAction.showMessage(ex.getMessage());
+        }
     }
 
     public void addVariable(View view) throws Exception {
         Variable variable = ((Variable) view.getTag());
 
-        if(variable.hasSelection()) {
-            Variable clone = Variable.createByMove(variable);
-            adapter.add(clone);
-        }
+        if(!this.guiAction.getTaskController().containerVariable(variable)) {
+            if (variable.hasSelection()) {
+                Variable clone = Variable.createByMove(variable);
+                this.guiAction.getTaskController().addVariable(clone);
+            } else {
+                this.removeVariable(view);
+            }
 
-        variable.resetInputParameter();
+            variable.resetInputParameter();
+        }
+        doInit();
     }
 
     public void removeVariable(View view) {
+        Object item = view.getTag();
 
+        if(item instanceof Variable) {
+            this.guiAction.getTaskController().removeVariable((Variable) item);
+            doInit();
+        }
     }
 
     @Override
@@ -67,5 +92,12 @@ public class ContentSettings extends ContentElement implements View.OnClickListe
     @Override
     public MODULE getModule() {
         return MODULE.SETTINGS;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        view.setTag(parent.getAdapter().getItem(position));
+        ParameterDialog parameterDialog = new ParameterDialog(this.guiAction, view);
+        parameterDialog.show();
     }
 }

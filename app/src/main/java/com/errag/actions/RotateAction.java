@@ -32,8 +32,8 @@ public class RotateAction extends Action {
     @Override
     public Parameter[] setInputParameter() {
         return new Parameter[]{
-                new Parameter(R.string.orientation_portrait, State.Orientation.PORTRAIT.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.orientation_landscape, State.Orientation.LANDSCAPE.toString(), Parameter.Type.BOOLEAN)
+                new Parameter(R.string.orientation_portrait, State.Orientation.PORTRAIT.toString(), Parameter.Type.RADIO),
+                new Parameter(R.string.orientation_landscape, State.Orientation.LANDSCAPE.toString(), Parameter.Type.RADIO)
         };
     }
 }

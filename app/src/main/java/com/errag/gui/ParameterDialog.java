@@ -87,68 +87,20 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
     }
 
     private void initDialog() {
-        final float scale = this.getContext().getResources().getDisplayMetrics().density;
-
         LinearLayout layout = this.findViewById(R.id.containerParameter);
         layout.removeAllViews();
 
         for(Parameter parameter : this.parameters) {
             String text = this.getContext().getString(parameter.getText());
-            String value = parameter.getValue();
             Parameter.Type type = parameter.getType();
             View header = null;
             View append = null;
 
-            if(type.equals(Parameter.Type.BOOLEAN)) {
-                if(parameter.getInput() == null)
-                    parameter.setInput(false);
-
-                final CheckBox checkbox = new CheckBox(this.getContext());
-                checkbox.setText(text);
-                checkbox.setChecked(Boolean.parseBoolean(parameter.getInput()));
-                checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        Parameter parameter = (Parameter)checkbox.getTag();
-                        parameter.setInput(isChecked);
-                        buttonView.setTag(parameter);
-                    }
-                });
-                append = checkbox;
+            if(type.equals(Parameter.Type.BOOLEAN) || type.equals(Parameter.Type.RADIO)) {
+                append = getCheckBox(parameter);
             } else if(type.equals(Parameter.Type.STRING) || type.equals(Parameter.Type.INTEGER)) {
-                boolean isNumber = type.equals(Parameter.Type.INTEGER);
-
-                if(parameter.getInput() == null)
-                    parameter.setInput("");
-
-                final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 25, 0, 0);
-
-                final TextView textView = new TextView(this.getContext());
-                textView.setText(text + ":");
-                textView.setLayoutParams(params);
-
-                final EditText editText = new EditText(this.getContext());
-                editText.setWidth((int) (225 * scale + 0.5f));
-                editText.setText(parameter.getInput());
-                editText.setInputType(isNumber ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_CLASS_TEXT);
-                editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        Parameter parameter = (Parameter)editText.getTag();
-                        parameter.setInput(s.toString());
-                        editText.setTag(parameter);
-                    }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-                    @Override
-                    public void afterTextChanged(Editable s) { }
-                });
-
-                header = textView;
-                append = editText;
+                header = getHeader(text);
+                append = getEditText(parameter);
             }
 
             if(append != null) {
@@ -162,6 +114,81 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
         }
     }
 
+    // getter view
+    private CheckBox getCheckBox(Parameter parameter) {
+        if(parameter.getInput() == null)
+            parameter.setInput(false);
+
+        final CheckBox checkbox = new CheckBox(this.getContext());
+        checkbox.setText(parameter.getText());
+        checkbox.setChecked(Boolean.parseBoolean(parameter.getInput()));
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Parameter parameter = (Parameter)checkbox.getTag();
+                parameter.setInput(isChecked);
+                buttonView.setTag(parameter);
+
+                // uncheck other checkboxes (dummy-radiobutton)
+                if(parameter.getType().equals(Parameter.Type.RADIO) && isChecked)
+                {
+                    LinearLayout layout = (LinearLayout)buttonView.getParent();
+
+                    for(int i=0; i<layout.getChildCount(); i++) {
+                        CheckBox child = (CheckBox)layout.getChildAt(i);
+
+                        if(child != checkbox && child.isChecked())
+                            child.setChecked(false);
+                    }
+                }
+            }
+        });
+
+        return checkbox;
+    }
+
+    private EditText getEditText(Parameter parameter) {
+        final float scale = this.getContext().getResources().getDisplayMetrics().density;
+        boolean isNumber = parameter.getType().equals(Parameter.Type.INTEGER);
+
+        if(parameter.getInput() == null)
+            parameter.setInput("");
+
+        final EditText editText = new EditText(this.getContext());
+        editText.setWidth((int) (250 * scale + 0.5f));
+        editText.setText(parameter.getInput());
+        editText.setInputType(isNumber ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_CLASS_TEXT);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Parameter parameter = (Parameter)editText.getTag();
+                parameter.setInput(s.toString());
+                editText.setTag(parameter);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
+        return editText;
+    }
+
+    private TextView getHeader(String header) {
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0, 25, 0, 0);
+
+        final TextView textView = new TextView(this.getContext());
+        textView.setText(header + ":");
+        textView.setLayoutParams(params);
+
+        return textView;
+    }
+
+
+    // listeners
     private void initListeners() {
         Button buttonSave = (Button)this.findViewById(R.id.btnParameterSave);
         Button buttonDelete = (Button)this.findViewById(R.id.btnParameterDelete);

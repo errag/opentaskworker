@@ -36,8 +36,8 @@ public class FlashAction extends Action {
     @Override
     public Parameter[] setInputParameter() {
         return new Parameter[]{
-                new Parameter(R.string.flash_on, State.Flash.ON.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.flash_off, State.Flash.OFF.toString(), Parameter.Type.BOOLEAN)
+                new Parameter(R.string.flash_on, State.Flash.ON.toString(), Parameter.Type.RADIO),
+                new Parameter(R.string.flash_off, State.Flash.OFF.toString(), Parameter.Type.RADIO)
         };
     }
 }

@@ -32,8 +32,8 @@ public class DarkModeAction extends Action {
     @Override
     public Parameter[] setInputParameter() {
         return new Parameter[]{
-                new Parameter(R.string.darkmode_on, State.DarkMode.ON.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.darkmode_off, State.DarkMode.OFF.toString(), Parameter.Type.BOOLEAN)
+                new Parameter(R.string.darkmode_on, State.DarkMode.ON.toString(), Parameter.Type.RADIO),
+                new Parameter(R.string.darkmode_off, State.DarkMode.OFF.toString(), Parameter.Type.RADIO)
         };
     }
 }

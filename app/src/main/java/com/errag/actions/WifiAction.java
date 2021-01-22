@@ -41,9 +41,9 @@ public class WifiAction extends Action {
     @Override
     public Parameter[] setInputParameter() {
         return new Parameter[] {
-                new Parameter(R.string.wifi_on, State.Wifi.ON.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.wifi_off, State.Wifi.OFF.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.wifi_toggle, State.Wifi.TOGGLE.toString(), Parameter.Type.BOOLEAN)
+                new Parameter(R.string.wifi_on, State.Wifi.ON.toString(), Parameter.Type.RADIO),
+                new Parameter(R.string.wifi_off, State.Wifi.OFF.toString(), Parameter.Type.RADIO),
+                new Parameter(R.string.wifi_toggle, State.Wifi.TOGGLE.toString(), Parameter.Type.RADIO)
         };
     }
 }

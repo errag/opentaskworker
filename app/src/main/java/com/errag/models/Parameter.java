@@ -4,7 +4,8 @@ public class Parameter {
     public enum Type {
         BOOLEAN,
         INTEGER,
-        STRING
+        STRING,
+        RADIO
     }
 
     private Integer text = null;

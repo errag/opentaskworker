@@ -43,7 +43,7 @@ public class BluetoothAction extends Action {
         return new Parameter[] {
                 new Parameter(R.string.bluetooth_on, State.Bluetooth.ON.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.bluetooth_off, State.Bluetooth.OFF.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.bluetooth_toggle, State.Bluetooth.OFF.toString(), Parameter.Type.BOOLEAN)
+                new Parameter(R.string.bluetooth_toggle, State.Bluetooth.TOGGLE.toString(), Parameter.Type.BOOLEAN)
         };
     }
 }

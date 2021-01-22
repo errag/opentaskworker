@@ -1,6 +1,8 @@
 package com.errag.gui;
 
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -9,6 +11,7 @@ import com.errag.models.SelectionViewItem;
 import com.errag.models.Variable;
 import com.errag.opentaskworker.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ContentSettings extends ContentElement implements View.OnClickListener {
@@ -20,6 +23,7 @@ public class ContentSettings extends ContentElement implements View.OnClickListe
     private LinearLayout viewVariablesLayout = null;
     private ListView listViewVariables = null;
     private VariableAdapter adapter;
+
 
     @Override
     protected void doInit() {
@@ -43,7 +47,6 @@ public class ContentSettings extends ContentElement implements View.OnClickListe
         }
 
         variable.resetInputParameter();
-
     }
 
     public void removeVariable(View view) {

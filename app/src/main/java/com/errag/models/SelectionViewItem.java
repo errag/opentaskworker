@@ -1,5 +1,9 @@
 package com.errag.models;
 
+import android.app.Activity;
+
+import com.errag.opentaskworker.PermissionController;
+
 public abstract class SelectionViewItem {
 
     protected Parameter[] inputParameter = null;
@@ -17,6 +21,10 @@ public abstract class SelectionViewItem {
 
     public void changeInputParameter(Parameter[] _inputParameter) {
         this.inputParameter = _inputParameter;
+    }
+
+    public void askForPermissions(Activity activity) {
+
     }
 
     public boolean hasSelection() {

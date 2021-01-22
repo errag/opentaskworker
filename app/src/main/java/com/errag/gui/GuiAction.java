@@ -24,6 +24,8 @@ public interface GuiAction {
         NEW_ACTION_DELETE,
 
         SETTING_NEW_VARIABLE,
-        SETTING_DELETE_VARIABLE
+        SETTING_DELETE_VARIABLE,
+
+        VIEW_REFRESH
     }
 }

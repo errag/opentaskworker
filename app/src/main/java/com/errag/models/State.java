@@ -162,6 +162,20 @@ public enum State
         }
     }
 
+
+
+    public enum Notify {
+        TITLE,
+        TEXT,
+        VIBRATE;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum Orientation {
         LANDSCAPE,
         PORTRAIT;

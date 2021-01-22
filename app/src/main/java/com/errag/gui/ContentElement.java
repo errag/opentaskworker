@@ -2,6 +2,7 @@ package com.errag.gui;
 
 import android.content.ClipData;
 import android.view.View;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -49,6 +50,10 @@ public abstract class ContentElement {
 
     public LinearLayout getLayout() {
         return this.layout;
+    }
+
+    protected void refresh() {
+        this.guiAction.sendGuiAction(GuiAction.AC.VIEW_REFRESH, null, this.getLayout(), null);
     }
 
     protected void generateSelectionView(

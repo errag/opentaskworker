@@ -7,6 +7,7 @@
     <string name="new_task_name">Name of your Task</string>
     <string name="dialog_parameter_button_save">SAVE</string>
     <string name="dialog_parameter_button_delete">DELETE</string>
+    <string name="dialog_parameter_button_test">TEST</string>
     <string name="header_new_trigger">TRIGGER</string>
     <string name="header_new_action">ACTION</string>
     <string name="header_settings_variables">VARIABLES</string>
@@ -63,6 +64,10 @@
     <string name="interruption_all">Interruption ALL</string>
     <string name="interruption_priority">Interruption PRIORITY</string>
     <string name="interruption_unknown">Interruption UNKNOWN</string>
+
+    <string name="notify_title">Notification Title</string>
+    <string name="notify_text">Notification Content</string>
+    <string name="notify_vibrate">Vibrate</string>
 
     <string name="number_input">Number value</string>
 

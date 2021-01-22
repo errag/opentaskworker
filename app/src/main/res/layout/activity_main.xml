@@ -116,213 +116,196 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/layoutTasks"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/layoutSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/layoutTasks"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" />
-
-                <LinearLayout
-                    android:id="@+id/layoutSettings"
+                <TextView
+                    android:id="@+id/textSettingVariablesHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                    android:layout_gravity="center|center_horizontal|center_vertical"
+                    android:height="35dp"
+                    android:alpha="0.90"
+                    android:background="#989797"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:text="@string/header_settings_variables"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textSettingVariablesHeader"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_horizontal|center_vertical"
-                        android:height="35dp"
-                        android:alpha="0.90"
-                        android:background="#989797"
-                        android:gravity="center|center_horizontal|center_vertical"
-                        android:text="@string/header_settings_variables"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textSettingVariables"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/setting_variables" />
-
-                    <HorizontalScrollView
-                        android:id="@+id/scrollSettingVariables"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"></LinearLayout>
-                    </HorizontalScrollView>
-
-                    <ListView
-                        android:id="@+id/listViewSettingVariables"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp">
-
-                    </ListView>
-
-                    <TextView
-                        android:id="@+id/textSettingDonateHeader"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_horizontal|center_vertical"
-                        android:height="35dp"
-                        android:alpha="0.90"
-                        android:background="#989797"
-                        android:gravity="center|center_horizontal|center_vertical"
-                        android:text="@string/header_setting_donate"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutDashboard"
+                <TextView
+                    android:id="@+id/textSettingVariables"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/setting_variables" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutNew"
+                <HorizontalScrollView
+                    android:id="@+id/scrollSettingVariables"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:layout_height="60dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingBottom="8dp">
+                        android:orientation="horizontal"></LinearLayout>
+                </HorizontalScrollView>
 
-                        <EditText
-                            android:id="@+id/editTextNewTaskName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:hint="@string/new_task_name"
-                            android:inputType="textPersonName" />
+                <ListView
+                    android:id="@+id/listViewSettingVariables"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1">
 
-                        <Button
-                            android:id="@+id/buttonNewSaveTask"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:background="#8BC34A"
-                            android:backgroundTint="#8BC34A"
-                            android:text="@string/dialog_parameter_button_save" />
-                    </LinearLayout>
+                </ListView>
 
-                    <TextView
-                        android:id="@+id/textNewTrigger"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_horizontal|center_vertical"
-                        android:height="35dp"
-                        android:alpha="0.90"
-                        android:background="#8BC34A"
-                        android:gravity="center|center_horizontal|center_vertical"
-                        android:text="@string/header_new_trigger"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textNewTriggerList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/new_trigger_list" />
-
-                    <HorizontalScrollView
-                        android:id="@+id/scrollNewTriggerList"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal" />
-                    </HorizontalScrollView>
-
-                    <TextView
-                        android:id="@+id/textNewAction"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_horizontal|center_vertical"
-                        android:layout_marginTop="15dp"
-                        android:height="35dp"
-                        android:alpha="0.90"
-                        android:background="#8BC34A"
-                        android:gravity="center|center_horizontal|center_vertical"
-                        android:text="@string/header_new_action"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textNewActionSelection"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/new_actions_selection" />
-
-                    <HorizontalScrollView
-                        android:id="@+id/scrollNewActionSelection"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"></LinearLayout>
-                    </HorizontalScrollView>
-
-                    <TextView
-                        android:id="@+id/textNewActionList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/new_actions_list" />
-
-                    <HorizontalScrollView
-                        android:id="@+id/scrollNewActionList"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal" />
-                    </HorizontalScrollView>
-
-                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/layoutDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutNew"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp">
+
+                    <EditText
+                        android:id="@+id/editTextNewTaskName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/new_task_name"
+                        android:inputType="textPersonName" />
+
+                    <Button
+                        android:id="@+id/buttonNewSaveTask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="#8BC34A"
+                        android:backgroundTint="#8BC34A"
+                        android:text="@string/dialog_parameter_button_save" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textNewTrigger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal|center_vertical"
+                    android:height="35dp"
+                    android:alpha="0.90"
+                    android:background="#8BC34A"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:text="@string/header_new_trigger"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textNewTriggerList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/new_trigger_list" />
+
+                <HorizontalScrollView
+                    android:id="@+id/scrollNewTriggerList"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/textNewAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal|center_vertical"
+                    android:layout_marginTop="15dp"
+                    android:height="35dp"
+                    android:alpha="0.90"
+                    android:background="#8BC34A"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:text="@string/header_new_action"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textNewActionSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/new_actions_selection" />
+
+                <HorizontalScrollView
+                    android:id="@+id/scrollNewActionSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"></LinearLayout>
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/textNewActionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/new_actions_list" />
+
+                <HorizontalScrollView
+                    android:id="@+id/scrollNewActionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

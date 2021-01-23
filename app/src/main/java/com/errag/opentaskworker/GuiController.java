@@ -2,6 +2,7 @@ package com.errag.opentaskworker;
 
 import android.app.Activity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 

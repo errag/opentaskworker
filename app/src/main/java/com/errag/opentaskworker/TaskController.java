@@ -126,6 +126,24 @@ public class TaskController {
         return settings.getVariableByName(_name);
     }
 
+    public void setService(boolean flag) {
+        if(flag)
+            startService();
+        else
+            stopService();
+    }
+
+    private void startService() {
+        for(Task task : tasks)
+            task.registrateRecever(this.context);
+    }
+
+    private void stopService() {
+        for(Task task : tasks) {
+            task.unregistrateReceiver(this.context);
+        }
+    }
+
     //
     public void saveTasks() {
         this.dataController.saveTasks(this.tasks);

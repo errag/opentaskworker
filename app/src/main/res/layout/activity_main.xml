@@ -125,7 +125,8 @@
                 android:id="@+id/layoutTasks"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                tools:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/layoutSettings"
@@ -136,7 +137,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <TextView
                     android:id="@+id/textSettingVariablesHeader"
@@ -182,6 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|center_horizontal|center_vertical"
+                    android:layout_marginTop="5dp"
                     android:height="35dp"
                     android:alpha="0.90"
                     android:background="#989797"
@@ -210,8 +212,34 @@
                 android:id="@+id/layoutDashboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/textDashboardHeaderOverview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal|center_vertical"
+                    android:height="35dp"
+                    android:alpha="0.90"
+                    android:background="#2196F3"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:text="@string/header_dashboard_overview"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <Switch
+                    android:id="@+id/switchDashboardService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/dashboard_service_running"
+                    android:textSize="15dp" />
             </LinearLayout>
 
             <LinearLayout

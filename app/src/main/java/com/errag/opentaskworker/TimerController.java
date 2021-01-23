@@ -47,9 +47,10 @@ public class TimerController {
 
     private static PendingIntent getAlarmIntent(Context context, int requestId)
     {
-        Intent intent = new Intent(context, EventController.class);
-        intent.putExtra("INDEX", requestId);
+        //Intent intent = new Intent(context, EventController.class);
+        //intent.putExtra("INDEX", requestId);
 
-        return PendingIntent.getBroadcast(context, requestId, intent, 0);
+        //return PendingIntent.getBroadcast(context, requestId, intent, 0);
+        return null;
     }
 }

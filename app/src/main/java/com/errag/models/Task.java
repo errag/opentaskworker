@@ -1,17 +1,17 @@
 package com.errag.models;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task {
+public class Task extends BroadcastReceiver {
     private boolean active = false;
     private String name = null;
     private List<Sensor> sensors = null;
     private List<Action> actions = null;
-
-    public Task() {
-
-    }
 
     public Task(String _name, List<Sensor> _sensors, List<Action> _actions) throws Exception {
         if(_sensors.size() == 0)
@@ -25,6 +25,33 @@ public class Task {
         this.active = true;
     }
 
+    public void registrateRecever(Context context) {
+        for(Sensor sensor : sensors)
+            context.registerReceiver(this, sensor.getIntentFilter());
+    }
+
+    public void unregistrateReceiver(Context context) {
+        context.unregisterReceiver(this);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        try {
+            if (this.isActive()) {
+                Sensor listeningSensor = this.getSensorByAction(intent.getAction());
+                Boolean isTrigger = listeningSensor.isSensorTrigger(context, intent);
+
+                if (isTrigger) {
+                    for (Action action : this.actions) {
+                        action.exec(context);
+                    }
+                }
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public SelectionViewItem[] getSelectionViewItems() {
         List<SelectionViewItem> items = new ArrayList<>();
         items.addAll(this.sensors);
@@ -32,6 +59,21 @@ public class Task {
 
         return items.toArray(new SelectionViewItem[items.size()]);
     }
+
+    private Sensor getSensorByAction(String _actionName) {
+        Sensor listeningSensor = null;
+
+        for(Sensor sensor : this.sensors) {
+            if(sensor.getActionName().equals(_actionName)) {
+                listeningSensor = sensor;
+                break;
+            }
+        }
+
+        return listeningSensor;
+    }
+
+    /*** GETTER & SETTER ***/
 
     public boolean isActive() {
         return active;

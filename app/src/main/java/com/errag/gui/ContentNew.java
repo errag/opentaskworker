@@ -93,6 +93,7 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
     }
 
     public void addAction(View view) throws Exception {
+        System.out.println("addAction");
         if(viewActionSelectionLayout != view.getParent()) {
             Action action = ((Action) view.getTag());
 

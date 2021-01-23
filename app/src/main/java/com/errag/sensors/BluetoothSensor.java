@@ -21,10 +21,10 @@ public class BluetoothSensor extends Sensor
         State.Bluetooth state = State.Bluetooth.UNKNOWN;
         int bluetoothState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
 
-        if(bluetoothState == BluetoothAdapter.STATE_OFF || bluetoothState == BluetoothAdapter.STATE_TURNING_OFF)
+        if(bluetoothState == BluetoothAdapter.STATE_OFF)
             state = State.Bluetooth.OFF;
 
-        if(bluetoothState == BluetoothAdapter.STATE_ON || bluetoothState == BluetoothAdapter.STATE_TURNING_ON)
+        if(bluetoothState == BluetoothAdapter.STATE_ON)
             state = State.Bluetooth.ON;
 
         return state.toString();

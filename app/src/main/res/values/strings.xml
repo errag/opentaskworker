@@ -4,10 +4,12 @@
     <string name="menu_tasks">TASKS</string>
     <string name="menu_new_task">NEW TASK</string>
     <string name="menu_settings">SETTINGS</string>
+    <string name="dashboard_service_running">OTW Background-Service running</string>
     <string name="new_trigger_list">Select the triggers for your task:</string>
     <string name="new_actions_list">List of available actions:</string>
     <string name="new_actions_selection">Your selected actions:</string>
     <string name="new_task_name">Name of your Task</string>
+    <string name="setting_variables">Available variable-types:</string>
     <string name="dialog_parameter_header">Please select your trigger/action:</string>
     <string name="dialog_parameter_button_save">SAVE</string>
     <string name="dialog_parameter_button_delete">DELETE</string>
@@ -16,8 +18,8 @@
     <string name="header_new_trigger">TRIGGER</string>
     <string name="header_new_action">ACTION</string>
     <string name="header_settings_variables">VARIABLES</string>
-    <string name="setting_variables">Available variable-types:</string>
     <string name="header_setting_donate">SUPPORT</string>
+    <string name="header_dashboard_overview">OVERVIEW</string>
 
     <string name="alert_warning">WARNING!</string>
     <string name="alert_delete_task">Do you realy want to delete the task?</string>

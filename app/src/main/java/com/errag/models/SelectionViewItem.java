@@ -34,9 +34,13 @@ public abstract class SelectionViewItem {
             if(parameter != null && parameter.getInput() != null) {
                 if (parameter.getType().equals(Parameter.Type.BOOLEAN) && Boolean.parseBoolean(parameter.getInput()))
                     return true;
+                if (parameter.getType().equals(Parameter.Type.RADIO) && Boolean.parseBoolean(parameter.getInput()))
+                    return true;
                 else if (parameter.getType().equals(Parameter.Type.INTEGER) && parameter.getInput().length() > 0)
                     return true;
                 else if (parameter.getType().equals(Parameter.Type.STRING) && parameter.getInput().length() > 0)
+                    return true;
+                else if (parameter.getType().equals(Parameter.Type.PASSWORD) && parameter.getInput().length() > 0)
                     return true;
             }
         }

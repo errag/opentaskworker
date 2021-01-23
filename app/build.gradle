@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.spif.opentaskworker"
+        applicationId "com.errag.opentaskworker"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
@@ -38,7 +38,7 @@ dependencies {
     implementation files('libs\\guava-15.0.jar')
     implementation files('libs\\javassist-3.19.0-GA.jar')
     testImplementation 'junit:junit:4.+'
+    implementation 'com.google.code.gson:gson:2.8.5'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
 }

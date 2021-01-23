@@ -23,5 +23,8 @@ public abstract class Sensor extends SelectionViewItem {
         return null;
     }
 
+    public boolean isSensorTrigger(Context context, Intent intent) {
+        return Action.getACBoolean(this.getState(context, intent), this.getInputParameters());
+    }
 
 }

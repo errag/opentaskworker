@@ -19,7 +19,7 @@ import com.errag.opentaskworker.R;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,26 +27,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         setContentView(R.layout.activity_main);
 
         try {
-            ArrayList<TimerObject> list = new ArrayList<TimerObject>();
-            list.add(TimerObject.getAlarmObjectInterval(1));
-
             TaskController taskController = new TaskController(this);
-            EventController eventController = new EventController(this, taskController);
             GuiController guiController = new GuiController(this, taskController);
-
-            WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            wifiManager.setWifiEnabled(true);
 
         } catch(Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode,
-            String permissions[],
-            int[] grantResults) {
-        System.out.println(grantResults[0]);
     }
 }

@@ -37,6 +37,7 @@ public class Task extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
+            System.out.println(intent.getAction());
             if (this.isActive()) {
                 Sensor listeningSensor = this.getSensorByAction(intent.getAction());
                 Boolean isTrigger = listeningSensor.isSensorTrigger(context, intent);

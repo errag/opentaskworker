@@ -4,24 +4,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.errag.models.Parameter;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Variable;
 import com.errag.opentaskworker.R;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ContentSettings extends ContentElement implements View.OnClickListener {
     public ContentSettings(LinearLayout _layout) {
@@ -92,7 +84,7 @@ public class ContentSettings extends ContentElement implements View.OnClickListe
     public void addVariable(View view) throws Exception {
         Variable variable = ((Variable) view.getTag());
 
-        if (!this.guiAction.getTaskController().containerVariable(variable)) {
+        if (!this.guiAction.getTaskController().containsVariable(variable)) {
             if (variable.hasSelection()) {
                 Variable clone = Variable.createByMove(variable);
 

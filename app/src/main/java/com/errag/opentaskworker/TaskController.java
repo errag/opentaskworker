@@ -1,11 +1,13 @@
 package com.errag.opentaskworker;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.errag.actions.BluetoothAction;
 import com.errag.actions.DelayAction;
 import com.errag.actions.WifiAction;
 import com.errag.models.Action;
+import com.errag.models.OTWService;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Sensor;
 import com.errag.models.Settings;
@@ -51,12 +53,27 @@ public class TaskController {
     private List<Task> tasks = null;
     private Settings settings = null;
 
-    public TaskController(Context _context) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
+    private static TaskController taskController = null;
+
+    private TaskController(Context _context) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
         this.context = _context;
         this.dataController = new DataController(this.context);
         this.tasks = dataController.loadTasks();
         this.settings = dataController.loadSettings();
     }
+
+    public static TaskController createInstance(Context _context) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
+        if(taskController == null)
+            taskController = new TaskController(_context);
+
+        return taskController;
+    }
+
+    public static TaskController getInstance() {
+        return taskController;
+    }
+
+    /*** TASK OPERATIONS ***/
 
     public boolean addTask(String name, List<Sensor> sensors, List<Action> actions) throws Exception {
         this.tasks.add(new Task(name, sensors, actions));
@@ -99,6 +116,8 @@ public class TaskController {
         return contains;
     }
 
+    /*** SETTINGS OPERATIONS ***/
+
     public boolean addVariable(Variable variable) {
         this.settings.addVariable(variable);
         this.saveSettings();
@@ -106,7 +125,7 @@ public class TaskController {
         return true;
     }
 
-    public boolean containerVariable(Variable variable) {
+    public boolean containsVariable(Variable variable) {
         boolean contains = this.settings.getVariables().contains(variable);
 
         if(contains)
@@ -126,25 +145,32 @@ public class TaskController {
         return settings.getVariableByName(_name);
     }
 
+    /*** SERVICE FUNCTIONS ***/
+
     public void setService(boolean flag) {
-        if(flag)
+        boolean isRunning = this.isServiceRunning();
+
+        if(flag && !isRunning)
             startService();
-        else
+        else if(!flag && isRunning)
             stopService();
     }
 
+    public boolean isServiceRunning() {
+        return OTWService.isRunning(this.context);
+    }
+
     private void startService() {
-        for(Task task : tasks)
-            task.registrateRecever(this.context);
+        Intent serviceIntent = new Intent(this.context, OTWService.class);
+        this.context.startService(serviceIntent);
     }
 
     private void stopService() {
-        for(Task task : tasks) {
-            task.unregistrateReceiver(this.context);
-        }
+        this.context.stopService(new Intent(this.context, OTWService.class));
     }
 
-    //
+    /*** FILE I/O FUNCTIONS***/
+
     public void saveTasks() {
         this.dataController.saveTasks(this.tasks);
     }
@@ -153,7 +179,8 @@ public class TaskController {
         this.dataController.saveSettings(this.settings);
     }
 
-    //
+    /*** REFLECTIONS - GET OTW ELEMENTS ***/
+
     public List<Variable> getUsedVariables() {
         return this.settings.getVariables();
     }

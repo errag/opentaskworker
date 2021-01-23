@@ -17,7 +17,7 @@ public class ContentDashboard extends ContentElement implements CompoundButton.O
     protected void doInit() {
         if(!isInit) {
             this.switchService = (Switch)this.guiAction.getActivity().findViewById(R.id.switchDashboardService);
-
+            this.switchService.setChecked(this.guiAction.getTaskController().isServiceRunning());
             this.switchService.setOnCheckedChangeListener(this);
         }
     }

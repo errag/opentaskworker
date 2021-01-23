@@ -21,12 +21,19 @@ public class GuiController implements GuiAction {
     private ContentHandler contentHandler = null;
     private TaskController taskController = null;
 
-    public GuiController(Activity _activity, TaskController _taskController)
+    private static GuiController guiController = null;
+
+    private GuiController(Activity _activity, TaskController _taskController)
     {
         this.activity = _activity;
         this.headerMenu = HeaderMenu.createInstance(this);
         this.contentHandler = ContentHandler.createInstance(this);
         this.taskController = _taskController;
+    }
+
+    public static void initApp(Activity _activity, TaskController _taskController) {
+        if(guiController == null)
+            guiController = new GuiController(_activity, _taskController);
     }
 
     private void changeHeaderMenu(View target, AC layoutAC) {

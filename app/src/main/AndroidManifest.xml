@@ -17,6 +17,18 @@
             </intent-filter>
         </activity>
 
+        <service android:name="com.errag.models.OTWService" android:enabled="true" />
+
+        <receiver
+            android:name=".RestartBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="RestartServiceWhenStopped">
+            <intent-filter>
+                <action android:name="otw.service.restart" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
     <uses-permission android:name="android.permission.BLUETOOTH" />

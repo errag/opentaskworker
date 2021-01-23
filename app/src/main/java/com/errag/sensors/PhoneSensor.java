@@ -42,7 +42,7 @@ public class PhoneSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.phone_idle, State.Phone.CALL_STATE_IDLE.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.phone_ringing, State.Phone.CALL_STATE_RINGING.toString(), Parameter.Type.BOOLEAN),

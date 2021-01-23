@@ -34,7 +34,7 @@ public class FlashAction extends Action {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[]{
                 new Parameter(R.string.flash_on, State.Flash.ON.toString(), Parameter.Type.RADIO),
                 new Parameter(R.string.flash_off, State.Flash.OFF.toString(), Parameter.Type.RADIO)

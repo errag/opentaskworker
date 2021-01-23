@@ -2,21 +2,23 @@ package com.errag.models;
 
 import android.app.Activity;
 
-import com.errag.opentaskworker.PermissionController;
-
 public abstract class SelectionViewItem {
 
     protected Parameter[] inputParameter = null;
 
     public abstract int getImage();
-    public abstract Parameter[] setInputParameter();
+    public abstract Parameter[] setDialogInputParameter();
 
     public void initInputParameters() {
-        this.inputParameter = this.setInputParameter();
+        this.inputParameter = this.setDialogInputParameter();
     }
 
     public Parameter[] getInputParameters() {
         return this.inputParameter;
+    }
+
+    public void setDialogInputParameter(Parameter[] _inputParameter) {
+        this.changeInputParameter(_inputParameter);
     }
 
     public void changeInputParameter(Parameter[] _inputParameter) {

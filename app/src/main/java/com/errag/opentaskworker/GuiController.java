@@ -11,6 +11,7 @@ import com.errag.gui.ContentNew;
 import com.errag.gui.ContentSettings;
 import com.errag.gui.GuiAction;
 import com.errag.gui.HeaderMenu;
+import com.errag.models.Task;
 
 public class GuiController implements GuiAction {
     private Activity activity = null;
@@ -28,13 +29,17 @@ public class GuiController implements GuiAction {
     }
 
     private void changeHeaderMenu(View target, AC layoutAC) {
-        Button button = (Button)target;
+        if(target != null && target instanceof Button) {
+            Button button = (Button) target;
+            this.headerMenu.changeTextMenu(button.getText(), button.getBackgroundTintList().getDefaultColor());
+        }
 
-        this.headerMenu.changeTextMenu(button.getText(), button.getBackgroundTintList().getDefaultColor());
         ContentElement contentElement = this.contentHandler.changeLayout(layoutAC);
 
         if(!contentElement.isInit())
             contentElement.init(this);
+
+        contentElement.updateUI();
     }
 
     private void refreshCurrentPanel(AC parameter, View view) {
@@ -45,6 +50,8 @@ public class GuiController implements GuiAction {
                 ((ContentNew)currentContent).addAction(view);
             else if(parameter.equals(AC.NEW_ACTION_DELETE))
                 ((ContentNew)currentContent).removeAction(view);
+            else if(parameter.equals(AC.EDIT_EXISTING_TAGS))
+                ((ContentNew)currentContent).editTask(view);
             else if(parameter.equals(AC.SETTING_NEW_VARIABLE))
                 ((ContentSettings)currentContent).addVariable(view);
             else if(parameter.equals(AC.SETTING_DELETE_VARIABLE))
@@ -57,6 +64,13 @@ public class GuiController implements GuiAction {
         }
     }
 
+    private void editTask(View view, AC parameter) {
+        if(view.getTag() instanceof Task) {
+            this.changeHeaderMenu(null, AC.CHANGE_LAYOUT_NEW);
+            this.refreshCurrentPanel(parameter, view);
+        }
+    }
+
     @Override
     public void sendGuiAction(AC action, AC parameter, View target, View.OnClickListener source)
     {
@@ -64,11 +78,13 @@ public class GuiController implements GuiAction {
             this.changeHeaderMenu(target, parameter);
         else if(action.equals(AC.DIALOG_CLOSE))
             this.refreshCurrentPanel(parameter, target);
+        else if(action.equals(AC.TASK_EDIT))
+            this.editTask(target, parameter);
     }
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG);
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

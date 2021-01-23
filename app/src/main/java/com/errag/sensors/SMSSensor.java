@@ -41,7 +41,7 @@ public class SMSSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.sms_received, State.SMS.RECEIVED.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.sms_number, null, Parameter.Type.STRING)

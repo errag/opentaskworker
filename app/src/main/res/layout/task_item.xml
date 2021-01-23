@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/task_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <CheckBox
+            android:id="@+id/task_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textSize="20dp"
+            android:src="@android:drawable/ic_menu_gallery" />
+
+        <Button
+            android:id="@+id/button_task_edit"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/button_task_delete"
+            android:backgroundTint="#FF9800"
+            app:icon="@drawable/img_edit" />
+
+        <Button
+            android:id="@+id/button_task_delete"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="#FF9800"
+            app:icon="@drawable/img_delete" />
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/task_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/task_header"
+        android:layout_marginTop="5dp"
+        android:layout_height="60dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        android:layout_below="@id/task_content"
+        />
+
+</RelativeLayout>

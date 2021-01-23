@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/textHeader"
@@ -13,43 +13,43 @@
         android:layout_margin="10dp"
         android:text="@string/dialog_parameter_header"
         android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/containerParameter"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="25dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp"
         android:orientation="vertical">
 
     </LinearLayout>
 
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/btnParameterTest"
             android:layout_width="215dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:background="@android:color/white"
             android:clickable="true"
-            android:layout_marginBottom="10dp"
             android:text="@string/dialog_parameter_button_test"
-            android:visibility="gone"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnParameterDelete"
@@ -64,12 +64,31 @@
             android:id="@+id/btnParameterSave"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:background="@android:color/white"
             android:clickable="true"
-            android:layout_marginLeft="15dp"
             android:text="@string/dialog_parameter_button_save"
             android:textStyle="bold" />
 
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnParameterClose"
+            android:layout_width="215dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="@string/dialog_parameter_button_close"
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

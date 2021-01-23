@@ -25,7 +25,7 @@ public class CameraSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.camera_snap, State.Camera.SHOT.toString(), Parameter.Type.BOOLEAN)
         };

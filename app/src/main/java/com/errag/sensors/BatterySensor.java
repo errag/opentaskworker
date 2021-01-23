@@ -32,7 +32,7 @@ public class BatterySensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.batter_charging, State.Battery.CHARGING.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.batter_discharching, State.Battery.NOT_CHARGING.toString(), Parameter.Type.BOOLEAN)

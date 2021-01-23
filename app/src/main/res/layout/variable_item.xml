@@ -22,7 +22,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="60dp"
         android:layout_toRightOf="@+id/variable_item_image"
-        android:text="Marshmallow"
         android:textColor="@android:color/black" />
 
 </RelativeLayout>

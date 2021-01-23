@@ -26,7 +26,7 @@ public class ScreenOffSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.screen_off, State.ScreenOff.OFF.toString(), Parameter.Type.BOOLEAN)
         };

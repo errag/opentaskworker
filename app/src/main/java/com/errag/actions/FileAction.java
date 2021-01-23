@@ -26,7 +26,7 @@ public class FileAction extends Action {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[0];
     }
 }

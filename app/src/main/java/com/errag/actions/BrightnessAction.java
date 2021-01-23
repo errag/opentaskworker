@@ -35,7 +35,7 @@ public class BrightnessAction extends Action {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[]{
                 new Parameter(R.string.brightness_level, State.Brightness.LEVEL.toString(), Parameter.Type.INTEGER)
         };

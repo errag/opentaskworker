@@ -37,7 +37,7 @@ public class PowerSaveMoveSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.powersavemode_on, State.PowerSaveMove.ON.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.powersavemode_off, State.PowerSaveMove.OFF.toString(), Parameter.Type.BOOLEAN)

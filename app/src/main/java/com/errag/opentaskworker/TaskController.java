@@ -65,8 +65,42 @@ public class TaskController {
         return true;
     }
 
+    public boolean editTask(Task task, List<Sensor> _sensors, List<Action> _actions) {
+        task.setSensors(_sensors);
+        task.setActions(_actions);
+        this.saveTasks();
+
+        return true;
+    }
+
+    public Task getTask(String _name) {
+        Task task = null;
+
+        for(Task _task : this.tasks) {
+            if(_task.getName().equals(_name))
+                task = _task;
+        }
+
+        return task;
+    }
+
+    public List<Task> getTasks() {
+        return this.tasks;
+    }
+
+    public boolean removeTask(Task task) {
+        boolean contains = this.tasks.contains(task);
+
+        if(contains) {
+            this.tasks.remove(task);
+            saveTasks();
+        }
+
+        return contains;
+    }
+
     public boolean addVariable(Variable variable) {
-        this.settings.getVariables().add(variable);
+        this.settings.addVariable(variable);
         this.saveSettings();
 
         return true;
@@ -88,12 +122,16 @@ public class TaskController {
         return true;
     }
 
+    public Variable getVariableByName(String _name) {
+        return settings.getVariableByName(_name);
+    }
+
     //
-    private void saveTasks() {
+    public void saveTasks() {
         this.dataController.saveTasks(this.tasks);
     }
 
-    private void saveSettings() {
+    public void saveSettings() {
         this.dataController.saveSettings(this.settings);
     }
 

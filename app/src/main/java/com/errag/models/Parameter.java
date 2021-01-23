@@ -3,8 +3,12 @@ package com.errag.models;
 public class Parameter {
     public enum Type {
         BOOLEAN,
+        RADIO,
         INTEGER,
-        STRING
+        STRING,
+        PASSWORD,
+        DATE,
+        TIME
     }
 
     private Integer text = null;
@@ -42,9 +46,7 @@ public class Parameter {
         this.type = type;
     }
 
-    public String getInput() {
-        return input;
-    }
+    public String getInput() { return input; }
 
     public void setInput(String input) {
         this.input = input;

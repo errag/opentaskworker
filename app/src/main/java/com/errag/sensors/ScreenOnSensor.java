@@ -26,7 +26,7 @@ public class ScreenOnSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.screen_on, State.ScreenOn.ON.toString(), Parameter.Type.BOOLEAN)
         };

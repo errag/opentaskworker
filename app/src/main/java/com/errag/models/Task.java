@@ -1,5 +1,6 @@
 package com.errag.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Task {
@@ -22,6 +23,14 @@ public class Task {
         this.sensors = _sensors;
         this.actions = _actions;
         this.active = true;
+    }
+
+    public SelectionViewItem[] getSelectionViewItems() {
+        List<SelectionViewItem> items = new ArrayList<>();
+        items.addAll(this.sensors);
+        items.addAll(this.actions);
+
+        return items.toArray(new SelectionViewItem[items.size()]);
     }
 
     public boolean isActive() {

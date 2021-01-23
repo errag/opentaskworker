@@ -35,7 +35,7 @@ public class GPSSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.gps_on, State.GPS.ON.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.gps_off, State.GPS.OFF.toString(), Parameter.Type.BOOLEAN)

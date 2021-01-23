@@ -30,7 +30,7 @@ public class USBSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.usb_connected, State.USB.CONNECTED.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.usb_disconnected, State.USB.DISCONNECTED.toString(), Parameter.Type.BOOLEAN)

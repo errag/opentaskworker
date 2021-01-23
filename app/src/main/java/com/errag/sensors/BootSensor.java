@@ -25,7 +25,7 @@ public class BootSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.boot_up, State.Boot.UP.toString(), Parameter.Type.BOOLEAN)
         };

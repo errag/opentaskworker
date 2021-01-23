@@ -1,13 +1,17 @@
 package com.errag.gui;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.errag.models.Action;
 import com.errag.models.SelectionViewItem;
+import com.errag.models.Sensor;
 import com.errag.opentaskworker.R;
 
 import java.util.ArrayList;
@@ -57,7 +61,7 @@ public abstract class ContentElement {
     }
 
     protected void generateSelectionView(
-            HorizontalScrollView scrollLayout, LinearLayout layout, SelectionViewItem[] items, View.OnClickListener onClick)
+            HorizontalScrollView scrollLayout, LinearLayout layout, SelectionViewItem[] items, View.OnClickListener onClick, boolean reset)
     {
         scrollLayout.setBackgroundResource(R.drawable.tasks_list);
         layout.setPadding(10, 20, 10, 20);
@@ -66,7 +70,9 @@ public abstract class ContentElement {
         if(items != null)
         {
             for(SelectionViewItem item : items) {
-                item.resetInputParameter();
+                if(reset)
+                    item.resetInputParameter();
+
                 ImageButton button = getSelectionViewButton(item, onClick, false);
                 layout.addView(button);
             }
@@ -97,14 +103,26 @@ public abstract class ContentElement {
             });
         }
 
-        if(getModule().equals(MODULE.NEW_TASK)) {
-            setImageButtonTriggerStyle(button, TASK_NON_SELECTED, TASK_TRIGGER);
+        if(getModule().equals(MODULE.TASKS) || getModule().equals(MODULE.NEW_TASK)) {
+            if(item instanceof Sensor)
+                setImageButtonTriggerStyle(button, TASK_NON_SELECTED, TASK_TRIGGER);
+            else
+                setImageButtonTriggerStyle(button, TASK_NON_SELECTED, TASK_ACTION);
         } else if(getModule().equals(MODULE.SETTINGS)) {
             button.setBackgroundResource(TASK_SETTING);
             button.setAlpha((float)0.80);
         }
 
         return button;
+    }
+
+    protected void openConfirmDialog(String _title, String _message, DialogInterface.OnClickListener listener) {
+        new AlertDialog.Builder(this.guiAction.getActivity())
+            .setTitle(_title)
+            .setMessage(_message)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton(android.R.string.yes, listener)
+            .setNegativeButton(android.R.string.no, null).show();
     }
 
     protected void setImageButtonTriggerStyle(View button, int notSelected, int selected) {

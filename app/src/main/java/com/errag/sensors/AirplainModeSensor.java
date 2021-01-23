@@ -32,7 +32,7 @@ public class AirplainModeSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.airplane_mode_on, State.AirplainMode.ON.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.airplane_mode_off, State.AirplainMode.OFF.toString(), Parameter.Type.BOOLEAN)

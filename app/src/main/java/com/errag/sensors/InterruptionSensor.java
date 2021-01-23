@@ -44,7 +44,7 @@ public class InterruptionSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.interruption_all, State.Interruption.ALL.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.interruption_priority, State.Interruption.PRIORITY.toString(), Parameter.Type.BOOLEAN),

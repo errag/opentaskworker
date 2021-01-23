@@ -1,20 +1,33 @@
 <resources>
     <string name="app_name">Open Task Worker</string>
+    <string name="menu_dashboard">DASHBOARD</string>
+    <string name="menu_tasks">TASKS</string>
+    <string name="menu_new_task">NEW TASK</string>
+    <string name="menu_settings">SETTINGS</string>
     <string name="new_trigger_list">Select the triggers for your task:</string>
     <string name="new_actions_list">List of available actions:</string>
     <string name="new_actions_selection">Your selected actions:</string>
-    <string name="dialog_parameter_header">Please select your trigger/action:</string>
     <string name="new_task_name">Name of your Task</string>
+    <string name="dialog_parameter_header">Please select your trigger/action:</string>
     <string name="dialog_parameter_button_save">SAVE</string>
     <string name="dialog_parameter_button_delete">DELETE</string>
     <string name="dialog_parameter_button_test">TEST</string>
+    <string name="dialog_parameter_button_close">CLOSE</string>
     <string name="header_new_trigger">TRIGGER</string>
     <string name="header_new_action">ACTION</string>
     <string name="header_settings_variables">VARIABLES</string>
     <string name="setting_variables">Available variable-types:</string>
-    <string name="header_setting_donate">DONATE / SUPPORT:</string>
+    <string name="header_setting_donate">SUPPORT</string>
+
+    <string name="alert_warning">WARNING!</string>
+    <string name="alert_delete_task">Do you realy want to delete the task?</string>
+    <string name="alert_existing_task">Task with this name already exists! Do you want to overwrite it?</string>
+
+    <string name="buy_me_a_coffee">Buy me a coffee</string>
+    <string name="coffee_link">https://www.buymeacoffee.com/spifitu</string>
 
     <string name="error_emtpy_filename">Filname is empty!</string>
+    <string name="error_variable_is_defined">Variable is already defined!</string>
 
     <!-- ACTION / SENSOR / VARIABLE -->
     <string name="airplane_mode_on">Airplain Mode ON</string>
@@ -44,6 +57,8 @@
 
     <string name="darkmode_on">Darkmode ON</string>
     <string name="darkmode_off">Darkmode OFF</string>
+
+    <string name="date_value">Date value</string>
 
     <string name="delay_time">Delay (ms)</string>
 
@@ -76,6 +91,8 @@
 
     <string name="outgoingcall_started">Outgoingcall started</string>
 
+    <string name="password_value">Password</string>
+
     <string name="phone_idle">Phone idle</string>
     <string name="phone_ringing">Phone ringing</string>
     <string name="phone_offhock">Phone offhock</string>
@@ -94,7 +111,9 @@
     <string name="sms_to_number">Send SMS to Number</string>
     <string name="sms_message">Message</string>
 
-    <string name="string_input">String value:</string>
+    <string name="string_input">String value</string>
+
+    <string name="time_value">Time value:</string>
 
     <string name="usb_connected">USB connected</string>
     <string name="usb_disconnected">USB disconnected</string>

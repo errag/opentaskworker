@@ -34,6 +34,16 @@ public abstract class Variable extends SelectionViewItem {
         return Action.getACString(VARIABLE.NAME.toString(), this.inputParameter);
     }
 
+    public enum DATE {
+        VALUE;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum EMAIL {
         SERVER,
         PORT,
@@ -58,7 +68,27 @@ public abstract class Variable extends SelectionViewItem {
         }
     }
 
+    public enum PASSWORD {
+        VALUE;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum STRING {
+        VALUE;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
+    public enum TIME {
         VALUE;
 
         @NonNull

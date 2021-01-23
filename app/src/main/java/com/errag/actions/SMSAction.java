@@ -26,7 +26,7 @@ public class SMSAction extends Action {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.sms_to_number, State.SMS.SEND_TO.toString(), Parameter.Type.STRING),
                 new Parameter(R.string.sms_message, State.SMS.MESSAGE.toString(), Parameter.Type.STRING)

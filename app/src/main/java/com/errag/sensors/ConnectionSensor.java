@@ -38,7 +38,7 @@ public class ConnectionSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.connection_wifi, State.Connection.WIFI.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.connection_mobile_data, State.Connection.MOBILE_DATA.toString(), Parameter.Type.BOOLEAN),

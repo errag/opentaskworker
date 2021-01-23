@@ -36,7 +36,7 @@ public class BatteryLevelSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.batter_level_changed, State.BatteryLevel.CHANGED.toString(), Parameter.Type.INTEGER)
         };

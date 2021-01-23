@@ -13,7 +13,7 @@ public class MailVariable extends Variable {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.email_server, EMAIL.SERVER.toString(), Parameter.Type.STRING),
                 new Parameter(R.string.email_port, EMAIL.PORT.toString(), Parameter.Type.STRING),

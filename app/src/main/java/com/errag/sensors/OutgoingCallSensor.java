@@ -30,7 +30,7 @@ public class OutgoingCallSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.outgoingcall_started, State.OutgoingCall.ON.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.phone_number, null, Parameter.Type.STRING)

@@ -11,7 +11,7 @@ public class NumberVariable extends Variable {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.number_input, NUMBER.VALUE.toString(), Parameter.Type.INTEGER)
         };

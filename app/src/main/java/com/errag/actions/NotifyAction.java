@@ -61,7 +61,7 @@ public class NotifyAction extends Action {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.notify_title, State.Notify.TITLE.toString(), Parameter.Type.STRING),
                 new Parameter(R.string.notify_text, State.Notify.TEXT.toString(), Parameter.Type.STRING),

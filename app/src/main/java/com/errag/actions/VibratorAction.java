@@ -29,7 +29,7 @@ public class VibratorAction extends Action {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.vibrator_ms, State.Vibrator.MS.toString(), Parameter.Type.INTEGER)
         };

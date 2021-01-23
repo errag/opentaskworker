@@ -1,13 +1,20 @@
 package com.errag.gui;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.errag.models.Parameter;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Variable;
 import com.errag.opentaskworker.R;
@@ -16,65 +23,99 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ContentSettings extends ContentElement implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class ContentSettings extends ContentElement implements View.OnClickListener {
     public ContentSettings(LinearLayout _layout) {
         super(_layout);
     }
 
     private HorizontalScrollView viewVariablesList = null;
     private LinearLayout viewVariablesLayout = null;
-    private ListView listViewVariables = null;
-    private VariableAdapter adapter;
+    private LinearLayout viewLayoutVariables = null;
+    private Button buttonBuyMeACoffee = null;
 
 
     @Override
     protected void doInit() {
         try {
-            if(!isInit) {
+            if (!isInit) {
                 viewVariablesList = (HorizontalScrollView) this.guiAction.getActivity().findViewById(R.id.scrollSettingVariables);
                 viewVariablesLayout = (LinearLayout) viewVariablesList.getChildAt(0);
-                listViewVariables = (ListView) this.guiAction.getActivity().findViewById(R.id.listViewSettingVariables);
+                viewLayoutVariables = (LinearLayout) this.guiAction.getActivity().findViewById(R.id.layoutSettingsVariables);
 
-                listViewVariables.setAdapter(adapter);
-                listViewVariables.setOnItemClickListener(this);
+                buttonBuyMeACoffee = (Button)this.guiAction.getActivity().findViewById(R.id.buttonSettingsCoffee);
+                buttonBuyMeACoffee.setOnClickListener(v -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(guiAction.getActivity().getString(R.string.coffee_link)));
+                    guiAction.getActivity().startActivity(intent);
+                });
             }
 
             SelectionViewItem[] availableVariables = this.guiAction.getTaskController().getAvailableVariables();
-            generateSelectionView(viewVariablesList, viewVariablesLayout, availableVariables, this);
+            generateSelectionView(viewVariablesList, viewVariablesLayout, availableVariables, this, true);
 
-            adapter = new VariableAdapter(
-                    new ArrayList<>(this.guiAction.getTaskController().getUsedVariables()),
-                    this.guiAction.getActivity()
-            );
-            listViewVariables.setAdapter(adapter);
+            refreshVariablesView();
 
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             this.guiAction.showMessage(ex.getMessage());
+        }
+    }
+
+    private void refreshVariablesView() {
+        viewLayoutVariables.removeAllViews();
+
+        for(Variable variable : this.guiAction.getTaskController().getUsedVariables()) {
+            View view =  LayoutInflater.from(this.guiAction.getActivity()).inflate(R.layout.variable_item, null);
+            view.setTag(variable);
+            view.setOnClickListener(this);
+
+            String name = variable.getVariableName();
+
+            if(variable.getInputParameters().length > 1) {
+                Parameter parameter = variable.getInputParameters()[1];
+                String value = parameter.getInput();
+
+                if (value != null && value.length() > 0) {
+                    if (!parameter.getType().equals(Parameter.Type.PASSWORD))
+                        name += " = " + value;
+                    else
+                        name += " = **********";
+                }
+            }
+
+            ((TextView)view.findViewById(R.id.variable_item_text)).setText(name);
+            ((ImageView)view.findViewById(R.id.variable_item_image)).setImageResource(variable.getImage());
+
+            viewLayoutVariables.addView(view);
         }
     }
 
     public void addVariable(View view) throws Exception {
         Variable variable = ((Variable) view.getTag());
 
-        if(!this.guiAction.getTaskController().containerVariable(variable)) {
+        if (!this.guiAction.getTaskController().containerVariable(variable)) {
             if (variable.hasSelection()) {
                 Variable clone = Variable.createByMove(variable);
-                this.guiAction.getTaskController().addVariable(clone);
+
+                if(this.guiAction.getTaskController().getVariableByName(clone.getVariableName()) != null)
+                    this.guiAction.showMessage(this.guiAction.getActivity().getString(R.string.error_variable_is_defined));
+                else
+                    this.guiAction.getTaskController().addVariable(clone);
             } else {
                 this.removeVariable(view);
             }
 
             variable.resetInputParameter();
         }
-        doInit();
+
+        refreshVariablesView();
     }
 
     public void removeVariable(View view) {
         Object item = view.getTag();
 
-        if(item instanceof Variable) {
+        if (item instanceof Variable) {
             this.guiAction.getTaskController().removeVariable((Variable) item);
-            doInit();
+            refreshVariablesView();
         }
     }
 
@@ -92,12 +133,5 @@ public class ContentSettings extends ContentElement implements View.OnClickListe
     @Override
     public MODULE getModule() {
         return MODULE.SETTINGS;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        view.setTag(parent.getAdapter().getItem(position));
-        ParameterDialog parameterDialog = new ParameterDialog(this.guiAction, view);
-        parameterDialog.show();
     }
 }

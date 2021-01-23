@@ -32,7 +32,7 @@ public class APSensor extends Sensor {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.ap_on, State.AP.ON.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.ap_off, State.AP.OFF.toString(), Parameter.Type.BOOLEAN)

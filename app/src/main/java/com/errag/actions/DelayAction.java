@@ -26,7 +26,7 @@ public class DelayAction extends Action {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.delay_time, State.Delay.MS.toString(), Parameter.Type.INTEGER)
         };

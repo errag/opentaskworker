@@ -12,7 +12,7 @@ public class StringVariable extends Variable {
     }
 
     @Override
-    public Parameter[] setInputParameter() {
+    public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.string_input, STRING.VALUE.toString(), Parameter.Type.STRING)
         };

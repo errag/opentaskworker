@@ -27,6 +27,9 @@ public interface GuiAction {
         SETTING_NEW_VARIABLE,
         SETTING_DELETE_VARIABLE,
 
+        TASK_EDIT,
+        EDIT_EXISTING_TAGS,
+
         VIEW_REFRESH
     }
 }

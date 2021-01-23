@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.errag.models.Action;
 import com.errag.models.GsonAdapter;
+import com.errag.models.Parameter;
+import com.errag.models.SelectionViewItem;
 import com.errag.models.Sensor;
 import com.errag.models.Settings;
 import com.errag.models.Task;
@@ -82,6 +84,7 @@ public class DataController {
 
     private Gson getGson() {
         GsonBuilder gsonBilder = new GsonBuilder();
+        gsonBilder.registerTypeAdapter(SelectionViewItem.class, new GsonAdapter<SelectionViewItem>());
         gsonBilder.registerTypeAdapter(Action.class, new GsonAdapter<Action>());
         gsonBilder.registerTypeAdapter(Sensor.class, new GsonAdapter<Sensor>());
         gsonBilder.registerTypeAdapter(Variable.class, new GsonAdapter<Variable>());

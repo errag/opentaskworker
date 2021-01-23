@@ -1,6 +1,7 @@
 package com.errag.gui;
 
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +55,12 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
             editTextTaskName.setText("");
 
             SelectionViewItem[] availableSensors = this.guiAction.getTaskController().getAvailableSensors();
-            generateSelectionView(viewTriggerList, viewTriggerLayout, availableSensors, this);
+            generateSelectionView(viewTriggerList, viewTriggerLayout, availableSensors, this, true);
 
             SelectionViewItem[] availableActions = this.guiAction.getTaskController().getAvailableActions();
-            generateSelectionView(viewActionList, viewActionLayout, availableActions, this);
+            generateSelectionView(viewActionList, viewActionLayout, availableActions, this, true);
 
-            generateSelectionView(viewActionSelection, viewActionSelectionLayout, null, this);
+            generateSelectionView(viewActionSelection, viewActionSelectionLayout, null, this, true);
         } catch(Exception ex) {
             ex.printStackTrace();
             this.guiAction.showMessage(ex.getMessage());
@@ -83,64 +84,11 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
 
     private void initListeners() {
         viewActionSelection.setOnDragListener((v, event) -> {
-            if(event.getAction() == DragEvent.ACTION_DROP) {
-                View view = (View)event.getLocalState();
-                ViewGroup owner = (ViewGroup)view.getParent();
-                owner.removeView(view);
-
-                // insert
-                boolean inserted = false;
-
-                for(int i=owner.getChildCount() - 1; i>=0; i--) {
-                    if(owner.getChildAt(i).getX() < event.getX())
-                    {
-                        owner.addView(view, i + 1);
-                        inserted = true;
-                        break;
-                    }
-                }
-
-                if(!inserted)
-                    owner.addView(view, 0);
-            }
-
-            return true;
+            return onSelectViewItemDroped(v, event);
         });
 
         buttonTaskSave.setOnClickListener(v -> {
-            try {
-                String taskName = editTextTaskName.getText().toString();
-
-                if (taskName.length() == 0) {
-                    throw new Exception(this.guiAction.getActivity().getString(R.string.error_emtpy_filename));
-                } else {
-                    List<Sensor> sensors = new ArrayList<>();
-                    List<Action> actions = new ArrayList<>();
-
-                    for(int i=0; i<viewTriggerLayout.getChildCount(); i++)
-                    {
-                        Sensor sensor = (Sensor)viewTriggerLayout.getChildAt(i).getTag();
-
-                        if(sensor.hasSelection())
-                            sensors.add(sensor);
-                    }
-
-                    for(int i=0; i<viewActionSelectionLayout.getChildCount(); i++)
-                    {
-                        Action action = (Action)viewActionSelectionLayout.getChildAt(i).getTag();
-
-                        if(action.hasSelection());
-                            actions.add(action);
-                    }
-
-                    this.guiAction.getTaskController().addTask(taskName, sensors, actions);
-
-                    doInit();
-                }
-            } catch(Exception ex) {
-                ex.printStackTrace();
-                this.guiAction.showMessage(ex.getMessage());
-            }
+            saveTask(false);
         });
     }
 
@@ -158,9 +106,124 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
         }
     }
 
+    private boolean onSelectViewItemDroped(View v, DragEvent event) {
+        if(event.getAction() == DragEvent.ACTION_DROP) {
+            View view = (View)event.getLocalState();
+            ViewGroup owner = (ViewGroup)view.getParent();
+            owner.removeView(view);
+
+            // insert
+            boolean inserted = false;
+
+            for(int i=owner.getChildCount() - 1; i>=0; i--) {
+                if(owner.getChildAt(i).getX() < event.getX())
+                {
+                    owner.addView(view, i + 1);
+                    inserted = true;
+                    break;
+                }
+            }
+
+            if(!inserted)
+                owner.addView(view, 0);
+        }
+
+        return true;
+    }
+
+    private boolean saveTask(boolean overwrite) {
+        boolean success = true;
+
+        try {
+            String taskName = editTextTaskName.getText().toString();
+            Task task = this.guiAction.getTaskController().getTask(taskName);
+
+            if (taskName.length() == 0) {
+                throw new Exception(this.guiAction.getActivity().getString(R.string.error_emtpy_filename));
+            } else {
+                List<Sensor> sensors = getSelectedSensors();
+                List<Action> actions = getSelectedActions();
+
+                if(task == null)
+                    this.guiAction.getTaskController().addTask(taskName, sensors, actions);
+                else {
+                    if(!overwrite) {
+                        this.openConfirmDialog(
+                                this.guiAction.getActivity().getString(R.string.alert_warning),
+                                this.guiAction.getActivity().getString(R.string.alert_existing_task),
+                                (dialog, which) -> {
+                                    saveTask(true);
+                                }
+                        );
+                        success = false;
+                    } else {
+                        this.guiAction.getTaskController().editTask(task, sensors, actions);
+                        this.guiAction.sendGuiAction(GuiAction.AC.CHANGE_MENU, GuiAction.AC.CHANGE_LAYOUT_TASKS, null, null);
+                    }
+                }
+
+                if(success)
+                    doInit();
+            }
+        } catch(Exception ex) {
+            success = false;
+            this.guiAction.showMessage(ex.getMessage());
+        }
+
+        return success;
+    }
+
     public void removeAction(View view) throws Exception {
         if(viewActionSelectionLayout == view.getParent())
             viewActionSelectionLayout.removeView(view);
+    }
+
+    public void editTask(View view) {
+        if(view.getTag() instanceof Task) {
+            Task task = (Task)view.getTag();
+
+            this.editTextTaskName.setText(task.getName());
+
+            List<Sensor> taskSensors = task.getSensors();
+
+            for(Sensor taskSensor : taskSensors) {
+                for(int i=0; i<viewTriggerLayout.getChildCount(); i++) {
+                    Sensor sensor = (Sensor)viewTriggerLayout.getChildAt(i).getTag();
+
+                    if(sensor.getClass().getName().equals(taskSensor.getClass().getName()))
+                        sensor.setDialogInputParameter(taskSensor.getInputParameters());
+                }
+            }
+
+            List<Action> taskActions = task.getActions();
+            generateSelectionView(viewActionSelection, viewActionSelectionLayout, taskActions.toArray(new SelectionViewItem[taskActions.size()]), this, false);
+        }
+    }
+
+    private List<Sensor> getSelectedSensors() {
+        List<Sensor> sensors = new ArrayList<>();
+
+        for(int i=0; i<viewTriggerLayout.getChildCount(); i++) {
+            Sensor sensor = (Sensor)viewTriggerLayout.getChildAt(i).getTag();
+
+            if(sensor.hasSelection())
+                sensors.add(sensor);
+        }
+
+        return sensors;
+    }
+
+    private List<Action> getSelectedActions() {
+        List<Action> actions = new ArrayList<>();
+
+        for(int i=0; i<viewActionSelectionLayout.getChildCount(); i++) {
+            Action action = (Action)viewActionSelectionLayout.getChildAt(i).getTag();
+
+            if(action.hasSelection());
+                actions.add(action);
+        }
+
+        return actions;
     }
 
     @Override

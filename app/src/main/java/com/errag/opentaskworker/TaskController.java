@@ -3,41 +3,16 @@ package com.errag.opentaskworker;
 import android.content.Context;
 import android.content.Intent;
 
-import com.errag.actions.BluetoothAction;
-import com.errag.actions.DelayAction;
-import com.errag.actions.WifiAction;
 import com.errag.models.Action;
-import com.errag.models.OTWService;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Sensor;
 import com.errag.models.Settings;
 import com.errag.models.Task;
 import com.errag.models.Variable;
-import com.errag.sensors.APSensor;
-import com.errag.sensors.AirplainModeSensor;
-import com.errag.sensors.BatteryLevelSensor;
-import com.errag.sensors.BatterySensor;
-import com.errag.sensors.BluetoothSensor;
-import com.errag.sensors.BootSensor;
-import com.errag.sensors.CameraSensor;
-import com.errag.sensors.ConnectionSensor;
-import com.errag.sensors.GPSSensor;
-import com.errag.sensors.InterruptionSensor;
-import com.errag.sensors.OrientationSensor;
-import com.errag.sensors.OutgoingCallSensor;
-import com.errag.sensors.PhoneSensor;
-import com.errag.sensors.PowerSaveMoveSensor;
-import com.errag.sensors.SMSSensor;
-import com.errag.sensors.ScreenOffSensor;
-import com.errag.sensors.ScreenOnSensor;
-import com.errag.sensors.USBSensor;
-import com.errag.sensors.WifiSensor;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -63,8 +38,7 @@ public class TaskController {
     }
 
     public static TaskController createInstance(Context _context) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
-        if(taskController == null)
-            taskController = new TaskController(_context);
+        taskController = new TaskController(_context);
 
         return taskController;
     }
@@ -141,32 +115,19 @@ public class TaskController {
         return true;
     }
 
+    public boolean changeSetting(String _setting, String _value) {
+        this.settings.changeSetting(_setting, _value);
+        this.saveSettings();
+
+        return true;
+    }
+
+    public String getSetting(String _setting) {
+        return this.settings.getSetting(_setting);
+    }
+
     public Variable getVariableByName(String _name) {
         return settings.getVariableByName(_name);
-    }
-
-    /*** SERVICE FUNCTIONS ***/
-
-    public void setService(boolean flag) {
-        boolean isRunning = this.isServiceRunning();
-
-        if(flag && !isRunning)
-            startService();
-        else if(!flag && isRunning)
-            stopService();
-    }
-
-    public boolean isServiceRunning() {
-        return OTWService.isRunning(this.context);
-    }
-
-    private void startService() {
-        Intent serviceIntent = new Intent(this.context, OTWService.class);
-        this.context.startService(serviceIntent);
-    }
-
-    private void stopService() {
-        this.context.stopService(new Intent(this.context, OTWService.class));
     }
 
     /*** FILE I/O FUNCTIONS***/
@@ -207,8 +168,8 @@ public class TaskController {
         List<SelectionViewItem> items = new ArrayList<>();
         DexFile df = new DexFile(this.context.getPackageCodePath());
 
-        for (Enumeration<String> iter = df.entries(); iter.hasMoreElements();) {
-            String className = iter.nextElement();
+        for (Enumeration<String> iterator = df.entries(); iterator.hasMoreElements();) {
+            String className = iterator.nextElement();
 
             if(className.startsWith(pkg)) {
                 Class<?> classObj = Class.forName(className);

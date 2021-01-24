@@ -9,6 +9,9 @@
     <string name="new_actions_list">List of available actions:</string>
     <string name="new_actions_selection">Your selected actions:</string>
     <string name="new_task_name">Name of your Task</string>
+    <string name="setting_akku">Ignore battery optimization</string>
+    <string name="setting_logging">Enable logging</string>
+    <string name="setting_restart">Restart on Boot</string>
     <string name="setting_variables">Available variable-types:</string>
     <string name="dialog_parameter_header">Please select your trigger/action:</string>
     <string name="dialog_parameter_button_save">SAVE</string>
@@ -17,6 +20,7 @@
     <string name="dialog_parameter_button_close">CLOSE</string>
     <string name="header_new_trigger">TRIGGER</string>
     <string name="header_new_action">ACTION</string>
+    <string name="header_settings_basic">BASIC</string>
     <string name="header_settings_variables">VARIABLES</string>
     <string name="header_setting_donate">SUPPORT</string>
     <string name="header_dashboard_overview">OVERVIEW</string>

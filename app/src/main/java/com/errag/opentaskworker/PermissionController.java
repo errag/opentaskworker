@@ -2,9 +2,11 @@ package com.errag.opentaskworker;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.PowerManager;
 import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
@@ -62,6 +64,20 @@ public class PermissionController {
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.ACCESS_NETWORK_STATE}
         );
+    }
+
+    public static void askForBatteryOptimization(Activity activity) {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+        intent.setData(Uri.parse("package:" + activity.getPackageName()));
+
+        activity.startActivity(intent);
+    }
+
+    public static boolean checkForBatteryOptimization(Activity activity) {
+        PowerManager powerManager = (PowerManager)activity.getSystemService(Context.POWER_SERVICE);
+
+        return powerManager.isIgnoringBatteryOptimizations(activity.getPackageName());
     }
 
     private static void askForPermission(Activity activity, String[] permission) {

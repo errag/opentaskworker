@@ -7,6 +7,7 @@ import java.util.TreeMap;
 public class Settings {
     List<Variable> variables = null;
     TreeMap<String, Variable> variablesDictionary = null;
+    TreeMap<String, String> settings = null;
 
     public Settings() {
         this(new ArrayList<>());
@@ -14,6 +15,7 @@ public class Settings {
 
     public Settings(List<Variable> _variables) {
         this.setVariables(_variables);
+        this.settings = new TreeMap<>();
     }
 
     public Variable getVariableByName(String _name) {
@@ -32,6 +34,17 @@ public class Settings {
             for(Variable variable : this.getVariables())
                 variablesDictionary.put(variable.getVariableName(), variable);
         }
+    }
+
+    public void changeSetting(String _setting, String _value) {
+        if(this.settings.containsKey(_setting))
+            this.settings.remove(_setting);
+
+        this.settings.put(_setting, _value);
+    }
+
+    public String getSetting(String _setting) {
+        return this.settings.get(_setting);
     }
 
 

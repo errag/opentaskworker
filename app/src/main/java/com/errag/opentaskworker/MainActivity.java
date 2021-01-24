@@ -1,61 +1,79 @@
 package com.errag.opentaskworker;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-
-import com.errag.models.OTWService;
-import com.errag.models.TimerObject;
-import com.errag.opentaskworker.R;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    Intent otwIntent = null;
-    private OTWService otwService = null;
-    Context context = null;
+    private static Intent otwIntent = null;
+    private static OTWService otwService = null;
+    private static Context context = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         try {
-            this.context = this;
+            context = this;
 
             TaskController taskController = TaskController.createInstance(this);
             GuiController.initApp(this, taskController);
 
-            otwService = new OTWService();
-            otwIntent = new Intent(getContext(), otwService.getClass());
-
-            if (!OTWService.isRunning(getContext()))
-                startService(otwIntent);
+            System.out.println(">>> " + isServiceRunning());
         } catch(Exception ex) {
             ex.printStackTrace();
         }
     }
 
     @Override
-    protected void onDestroy() {Intent broadcastIntent = new Intent();
+    protected void onDestroy() {
+        Intent broadcastIntent = new Intent();
         broadcastIntent.setAction("otw.service.restart");
         broadcastIntent.setClass(this, RestartBroadcastReceiver.class);
         this.sendBroadcast(broadcastIntent);
         super.onDestroy();
     }
 
-    private Context getContext() {
-        return this.context;
+    /*
+     *      STATIC SERVICE FUNCTIONS
+     */
+
+    public static void startService() {
+        otwService = new OTWService();
+        otwIntent = new Intent(getContext(), otwService.getClass());
+
+        if (!isServiceRunning()) {
+            OTWService.RESTART = true;
+            getContext().startService(otwIntent);
+        }
+    }
+
+    public static void stopService() {
+        if (isServiceRunning()) {
+            OTWService.RESTART = false;
+            getContext().stopService(new Intent(getContext(), OTWService.class));
+        }
+    }
+
+    private static Context getContext() {
+        return context;
+    }
+
+    public static boolean isServiceRunning() {
+        Class<?> serviceClass = OTWService.class;
+        Context context = getContext();
+
+        ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName()))
+                return true;
+        }
+
+        return false;
     }
 }

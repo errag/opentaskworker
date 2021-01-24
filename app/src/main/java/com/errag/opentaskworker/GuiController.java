@@ -29,11 +29,14 @@ public class GuiController implements GuiAction {
         this.headerMenu = HeaderMenu.createInstance(this);
         this.contentHandler = ContentHandler.createInstance(this);
         this.taskController = _taskController;
+
+        // load dashboard
+        System.out.println("change menu");
+        this.changeHeaderMenu(null, AC.CHANGE_LAYOUT_DASHBOARD);
     }
 
     public static void initApp(Activity _activity, TaskController _taskController) {
-        if(guiController == null)
-            guiController = new GuiController(_activity, _taskController);
+        guiController = new GuiController(_activity, _taskController);
     }
 
     private void changeHeaderMenu(View target, AC layoutAC) {

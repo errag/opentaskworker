@@ -1,17 +1,15 @@
-package com.errag.models;
+package com.errag.opentaskworker;
 
 import android.app.ActivityManager;
-import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.errag.opentaskworker.TaskController;
+import com.errag.models.Task;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,6 +18,8 @@ public class OTWService extends Service {
 
     private static TaskController taskController = null;
 
+    public static boolean RESTART = false;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -27,13 +27,6 @@ public class OTWService extends Service {
     }
 
     public OTWService() {
-        /*if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
-            customStartForeground();
-        else*/
-        //    startForeground(1, new Notification());
-    }
-
-    private void customStartForeground() {
 
     }
 
@@ -42,40 +35,32 @@ public class OTWService extends Service {
         super.onStartCommand(intent, flags, startId);
 
         taskController = TaskController.getInstance();
-
-        for(Task task : taskController.getTasks())
-            task.registrateRecever(this);
-
-        startTimer();
+        this.registrateTasks();
 
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
-        for(Task task : taskController.getTasks())
-            task.unregistrateReceiver(this);
+        this.unregistrateTasks();
 
         Intent broadcastIntent = new Intent(this, OTWService.class);
-        sendBroadcast(broadcastIntent);
-        stoptimertask();
+        broadcastIntent.setAction("otw.service.restart");
+        broadcastIntent.setClass(this, RestartBroadcastReceiver.class);
+        this.sendBroadcast(broadcastIntent);
 
         System.out.println("DESTROY");
+        super.onDestroy();
     }
 
-    public static boolean isRunning(Context context) {
-        Class<?> serviceClass = OTWService.class;
+    private void registrateTasks() {
+        for(Task task : taskController.getTasks())
+            task.registrateRecever(this);
+    }
 
-        ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName()))
-                return true;
-        }
-
-        return false;
+    private void unregistrateTasks() {
+        for(Task task : taskController.getTasks())
+            task.unregistrateReceiver(this);
     }
 
     int counter;

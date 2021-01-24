@@ -19,8 +19,7 @@ public class ContentHandler {
     }
 
     public static ContentHandler createInstance(GuiAction _guiAction) {
-        if(contentHandler == null)
-            contentHandler = new ContentHandler(_guiAction);
+        contentHandler = new ContentHandler(_guiAction);
 
         return contentHandler;
     }

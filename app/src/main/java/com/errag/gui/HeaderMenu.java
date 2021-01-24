@@ -23,8 +23,7 @@ public class HeaderMenu implements View.OnClickListener
     }
 
     public static HeaderMenu createInstance(GuiAction _guiAction) {
-        if(headerMenu == null)
-            headerMenu = new HeaderMenu(_guiAction);
+        headerMenu = new HeaderMenu(_guiAction);
 
         return headerMenu;
     }

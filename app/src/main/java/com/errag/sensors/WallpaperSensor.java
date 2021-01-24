@@ -8,27 +8,26 @@ import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
-public class ScreenOnSensor extends Sensor {
-
+public class WallpaperSensor extends Sensor {
     @Override
     public String getActionName() {
-        return Intent.ACTION_SCREEN_ON;
+        return Intent.ACTION_SET_WALLPAPER;
     }
 
     @Override
     public String getState(Context context, Intent intent) {
-        return State.ScreenOn.ON.toString();
+        return State.Wallpaper.CHANGED.toString();
     }
 
     @Override
     public int getImage() {
-        return R.drawable.img_screenon;
+        return R.drawable.img_wallpaper;
     }
 
     @Override
     public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
-                new Parameter(R.string.screen_on, State.ScreenOn.ON.toString(), Parameter.Type.BOOLEAN)
+                new Parameter(R.string.wallpaper_changed, State.Wallpaper.CHANGED.toString(), Parameter.Type.BOOLEAN)
         };
     }
 }

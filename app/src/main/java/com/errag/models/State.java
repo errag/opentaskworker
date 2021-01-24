@@ -82,6 +82,19 @@ public enum State
         }
     }
 
+    public enum Button {
+        NONE,
+        CAMERA,
+        CALL,
+        MEDIA;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum Camera {
         SHOT;
 
@@ -147,6 +160,16 @@ public enum State
         }
     }
 
+    public enum Headset {
+        PLUG;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum Interruption {
         NOT_RESOLVEABLE,
         ALARMS,
@@ -161,8 +184,6 @@ public enum State
             return this.getClass().getSimpleName() + "." + this.name();
         }
     }
-
-
 
     public enum Notify {
         TITLE,
@@ -221,6 +242,16 @@ public enum State
         }
     }
 
+    public enum Proxy {
+        CHANGED;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum ScreenOff {
         OFF;
 
@@ -233,6 +264,20 @@ public enum State
 
     public enum ScreenOn {
         ON;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
+    public enum SimCard {
+        UNKNOWN,
+        LOCKED,
+        READY,
+        IMSI,
+        LOADED;
 
         @NonNull
         @Override
@@ -278,6 +323,16 @@ public enum State
         ON,
         OFF,
         TOGGLE;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
+    public enum Wallpaper {
+        CHANGED;
 
         @NonNull
         @Override

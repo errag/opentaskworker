@@ -174,8 +174,12 @@ public class TaskController {
             if(className.startsWith(pkg)) {
                 Class<?> classObj = Class.forName(className);
 
-                if(className.startsWith(pkg))
-                    items.add((SelectionViewItem) classObj.newInstance());
+                if(className.startsWith(pkg)) {
+                    SelectionViewItem selectionViewItem = (SelectionViewItem) classObj.newInstance();
+
+                    if(selectionViewItem.isActive())
+                        items.add(selectionViewItem);
+                }
             }
         }
 

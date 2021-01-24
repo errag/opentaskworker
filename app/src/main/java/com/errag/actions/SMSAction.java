@@ -1,11 +1,13 @@
 package com.errag.actions;
 
+import android.app.Activity;
 import android.content.Context;
 import android.telephony.SmsManager;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.State;
+import com.errag.opentaskworker.PermissionController;
 import com.errag.opentaskworker.R;
 
 public class SMSAction extends Action {
@@ -23,6 +25,11 @@ public class SMSAction extends Action {
     @Override
     public int getImage() {
         return R.drawable.img_sms;
+    }
+
+    @Override
+    public void askForPermissions(Activity activity) {
+        PermissionController.askForSMSSend(activity);
     }
 
     @Override

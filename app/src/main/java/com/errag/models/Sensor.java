@@ -4,13 +4,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import java.util.ArrayList;
+
 public abstract class Sensor extends SelectionViewItem {
 
     public abstract String getActionName();
     public abstract String getState(Context context, Intent intent);
 
-    public IntentFilter getIntentFilter() {
-        return new IntentFilter(getActionName());
+    public String[] getActionNames() {
+        return null;
+    }
+
+    public IntentFilter[] getIntentFilter() {
+        ArrayList<IntentFilter> intentFilter = new ArrayList<>();
+
+        if(getActionName() != null)
+            intentFilter.add(new IntentFilter(getActionName()));
+        else if(getActionNames() != null) {
+            for(String action : getActionNames())
+                intentFilter.add(new IntentFilter(getActionName()));
+        }
+
+        return intentFilter.toArray(new IntentFilter[intentFilter.size()]);
     }
 
     public boolean validateReceive(String action) {

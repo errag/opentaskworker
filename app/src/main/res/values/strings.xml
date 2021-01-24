@@ -55,6 +55,10 @@
 
     <string name="brightness_level">Brightness Level (0-255)</string>
 
+    <string name="button_call">Button CALL clicked</string>
+    <string name="button_camera">Button CAMERA clicked</string>
+    <string name="button_media">Button MEDIA clicked</string>
+
     <string name="camera_snap">Photo taken</string>
 
     <string name="connection_wifi">WIFI connection</string>
@@ -79,6 +83,8 @@
 
     <string name="gps_on">GPS ON</string>
     <string name="gps_off">GPS OFF</string>
+
+    <string name="headset_plug">Headset PLUG</string>
 
     <string name="interruption_alarms">Interruption ALARM</string>
     <string name="interruption_none">Interruption NONE</string>
@@ -108,9 +114,16 @@
     <string name="powersavemode_on">Powersave-Mode ON</string>
     <string name="powersavemode_off">Powersave-Mode OFF</string>
 
+    <string name="proxy_changed">Proxy changed</string>
+
     <string name="screen_on">Screen ON</string>
 
     <string name="screen_off">Screen OFF</string>
+
+    <string name="sim_loaded">Sim-Card LOADED</string>
+    <string name="sim_imsi">Sim-Card IMSI</string>
+    <string name="sim_ready">Sim-Card READY</string>
+    <string name="sim_locked">Sim-Card LOCKED</string>
 
     <string name="sms_received">SMS received</string>
     <string name="sms_number">SMS from Number</string>
@@ -127,6 +140,8 @@
     <string name="variable_name">Variable Name</string>
 
     <string name="vibrator_ms">Vibrator (ms)</string>
+
+    <string name="wallpaper_changed">Wallpaper changed</string>
 
     <string name="wifi_on">WIFI ON</string>
     <string name="wifi_off">WIFI OFF</string>

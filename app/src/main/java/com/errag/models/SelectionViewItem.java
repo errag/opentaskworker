@@ -29,6 +29,10 @@ public abstract class SelectionViewItem {
 
     }
 
+    public boolean isActive() {
+        return true;
+    }
+
     public boolean hasSelection() {
         for(Parameter parameter : this.getInputParameters()) {
             if(parameter != null && parameter.getInput() != null) {

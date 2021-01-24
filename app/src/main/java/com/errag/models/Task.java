@@ -3,6 +3,7 @@ package com.errag.models;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,12 @@ public class Task extends BroadcastReceiver {
     }
 
     public void registrateRecever(Context context) {
-        for(Sensor sensor : sensors)
-            context.registerReceiver(this, sensor.getIntentFilter());
+        for(Sensor sensor : sensors) {
+            IntentFilter[] intentFilters = sensor.getIntentFilter();
+
+            for(IntentFilter intentFilter : intentFilters)
+                context.registerReceiver(this, intentFilter);
+        }
     }
 
     public void unregistrateReceiver(Context context) {

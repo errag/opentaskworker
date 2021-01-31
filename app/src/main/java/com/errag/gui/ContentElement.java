@@ -57,7 +57,7 @@ public abstract class ContentElement {
     }
 
     protected void refresh() {
-        this.guiAction.sendGuiAction(GuiAction.AC.VIEW_REFRESH, null, this.getLayout(), null);
+        this.guiAction.sendGuiAction(GuiAction.AC.VIEW_REFRESH, null, this.getLayout(), null, null);
     }
 
     protected void generateSelectionView(

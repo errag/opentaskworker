@@ -40,8 +40,8 @@ public class ScreenAction extends Action {
     @Override
     public Parameter[] setDialogInputParameter() {
         return new Parameter[]{
-                new Parameter(R.string.bluetooth_on, State.ScreenOn.ON.toString(), Parameter.Type.RADIO),
-                new Parameter(R.string.bluetooth_off, State.ScreenOff.OFF.toString(), Parameter.Type.RADIO)
+                new Parameter(R.string.screen_on, State.ScreenOn.ON.toString(), Parameter.Type.RADIO),
+                new Parameter(R.string.screen_off, State.ScreenOff.OFF.toString(), Parameter.Type.RADIO)
         };
     }
 }

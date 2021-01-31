@@ -87,7 +87,7 @@ public class ContentTasks extends ContentElement {
     private View.OnClickListener getOnClickListenerTask(final Button taskEdit, final Button taskDelete, final Task task) {
         return v -> {
             if(v == taskEdit)
-                guiAction.sendGuiAction(GuiAction.AC.TASK_EDIT, GuiAction.AC.EDIT_EXISTING_TAGS, v, null);
+                guiAction.sendGuiAction(GuiAction.AC.TASK_EDIT, GuiAction.AC.EDIT_EXISTING_TAGS, v, null, null);
             else if(v == taskDelete)
             {
                 openConfirmDialog(

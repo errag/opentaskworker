@@ -2,16 +2,24 @@ package com.errag.opentaskworker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+import com.errag.gui.GuiAction;
 
 public class MainActivity extends AppCompatActivity {
 
     private static Intent otwIntent = null;
     private static OTWService otwService = null;
     private static Context context = null;
+
+    public final static int REQUEST_DIRECTORY = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +46,32 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String message = null;
+
+        if (requestCode == REQUEST_DIRECTORY) {
+            if(resultCode == Activity.RESULT_OK) {
+                message = data.getDataString();
+
+                if(message.contains("%3A"))
+                    message = message.split("%3A")[1].replaceAll("%2F", "/");
+            }
+        }
+
+        if(message != null)
+            GuiController.getInstance().sendGuiAction(GuiAction.AC.ACTIVITY_RESULT, GuiAction.AC.PARAMETER_DIALOG, null, null, message);
+    }
+
     /*
      *      STATIC SERVICE FUNCTIONS
      */
+
+    public static Context getContext() {
+        return context;
+    }
 
     public static void startService() {
         otwService = new OTWService();
@@ -57,10 +88,6 @@ public class MainActivity extends AppCompatActivity {
             OTWService.RESTART = false;
             getContext().stopService(new Intent(getContext(), OTWService.class));
         }
-    }
-
-    private static Context getContext() {
-        return context;
     }
 
     public static boolean isServiceRunning() {

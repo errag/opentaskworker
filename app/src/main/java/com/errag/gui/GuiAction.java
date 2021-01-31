@@ -8,7 +8,7 @@ import com.errag.opentaskworker.TaskController;
 public interface GuiAction {
     public Activity getActivity();
     public TaskController getTaskController();
-    public void sendGuiAction(AC action, AC parameter, View target, View.OnClickListener source);
+    public void sendGuiAction(AC action, AC parameter, View target, View.OnClickListener source, String message);
     public void showMessage(String message);
 
     public enum AC {
@@ -29,6 +29,9 @@ public interface GuiAction {
 
         TASK_EDIT,
         EDIT_EXISTING_TAGS,
+
+        ACTIVITY_RESULT,
+        PARAMETER_DIALOG,
 
         VIEW_REFRESH
     }

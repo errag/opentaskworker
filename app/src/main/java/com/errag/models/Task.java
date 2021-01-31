@@ -32,6 +32,8 @@ public class Task extends BroadcastReceiver {
 
             for(IntentFilter intentFilter : intentFilters)
                 context.registerReceiver(this, intentFilter);
+
+            sensor.registrateCustomIntentFilter(context);
         }
     }
 
@@ -42,7 +44,6 @@ public class Task extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
-            System.out.println(intent.getAction());
             if (this.isActive()) {
                 Sensor listeningSensor = this.getSensorByAction(intent.getAction());
                 Boolean isTrigger = listeningSensor.isSensorTrigger(context, intent);

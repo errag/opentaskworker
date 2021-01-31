@@ -17,6 +17,16 @@ public enum State
         }
     }
 
+    public enum APP {
+        START;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum AP {
         ON,
         OFF;
@@ -86,7 +96,8 @@ public enum State
         NONE,
         CAMERA,
         CALL,
-        MEDIA;
+        MEDIA,
+        HOME;
 
         @NonNull
         @Override
@@ -138,6 +149,45 @@ public enum State
         }
     }
 
+    public enum File {
+        COPY,
+        MOVE,
+        DIRECTORY,
+        FILENAME,
+        TARGET;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
+    public enum FileDelete {
+        DIRECTORY,
+        FILENAME;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
+    public enum FileWrite {
+        WRITE,
+        APPEND,
+        DIRECTORY,
+        FILENAME,
+        TEXT;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum Flash {
         ON,
         OFF;
@@ -160,8 +210,22 @@ public enum State
         }
     }
 
+    public enum Http {
+        URL,
+        METHOD,
+        PARAMS;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum Headset {
-        PLUG;
+        UNKNOWN,
+        PLUG,
+        UNPLUG;
 
         @NonNull
         @Override
@@ -177,6 +241,18 @@ public enum State
         ALL,
         PRIORITY,
         UNKNOWN;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
+    public enum IP {
+        CHANGED,
+        UNCHANGED,
+        ADDRESS;
 
         @NonNull
         @Override
@@ -298,6 +374,16 @@ public enum State
         }
     }
 
+    public enum TIME {
+        INTERVAL;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName() + "." + this.name();
+        }
+    }
+
     public enum USB {
         CONNECTED,
         DISCONNECTED;
@@ -322,7 +408,9 @@ public enum State
     public enum Wifi {
         ON,
         OFF,
-        TOGGLE;
+        TOGGLE,
+        SSID,
+        SSID_NOT_CONNECTED;
 
         @NonNull
         @Override

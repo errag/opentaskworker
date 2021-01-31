@@ -12,6 +12,7 @@ import com.errag.gui.ContentNew;
 import com.errag.gui.ContentSettings;
 import com.errag.gui.GuiAction;
 import com.errag.gui.HeaderMenu;
+import com.errag.gui.ParameterDialog;
 import com.errag.models.Task;
 
 public class GuiController implements GuiAction {
@@ -31,12 +32,15 @@ public class GuiController implements GuiAction {
         this.taskController = _taskController;
 
         // load dashboard
-        System.out.println("change menu");
         this.changeHeaderMenu(null, AC.CHANGE_LAYOUT_DASHBOARD);
     }
 
     public static void initApp(Activity _activity, TaskController _taskController) {
         guiController = new GuiController(_activity, _taskController);
+    }
+
+    public static GuiController getInstance() {
+        return guiController;
     }
 
     private void changeHeaderMenu(View target, AC layoutAC) {
@@ -82,8 +86,17 @@ public class GuiController implements GuiAction {
         }
     }
 
+    private void sendActivityResult(AC parameter, String message) {
+        if(parameter.equals(AC.PARAMETER_DIALOG)) {
+            ParameterDialog parameterDialog = ParameterDialog.getMainDialog();
+
+            if (parameterDialog != null)
+                parameterDialog.sendToActivityListenerView(message);
+        }
+    }
+
     @Override
-    public void sendGuiAction(AC action, AC parameter, View target, View.OnClickListener source)
+    public void sendGuiAction(AC action, AC parameter, View target, View.OnClickListener source, String message)
     {
         if(action.equals(AC.CHANGE_MENU))
             this.changeHeaderMenu(target, parameter);
@@ -91,6 +104,8 @@ public class GuiController implements GuiAction {
             this.refreshCurrentPanel(parameter, target);
         else if(action.equals(AC.TASK_EDIT))
             this.editTask(target, parameter);
+        else if(action.equals(AC.ACTIVITY_RESULT))
+            this.sendActivityResult(parameter, message);
     }
 
     @Override

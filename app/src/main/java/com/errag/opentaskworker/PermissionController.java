@@ -42,7 +42,7 @@ public class PermissionController {
     }
 
     public static void askForSMSSend(Activity activity) {
-        askForPermission(activity, new String[] {Manifest.permission.SEND_SMS});
+        askForPermission(activity, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS});
     }
 
     public static void askForWriteSettings(Activity activity) {
@@ -72,6 +72,15 @@ public class PermissionController {
         intent.setData(Uri.parse("package:" + activity.getPackageName()));
 
         activity.startActivity(intent);
+    }
+
+    public static void askForOverlay(Activity activity) {
+        if (!Settings.canDrawOverlays(activity)) {
+            int REQUEST_CODE = 101;
+            Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+            myIntent.setData(Uri.parse("package:" + activity.getPackageName()));
+            activity.startActivityForResult(myIntent, REQUEST_CODE);
+        }
     }
 
     public static boolean checkForBatteryOptimization(Activity activity) {

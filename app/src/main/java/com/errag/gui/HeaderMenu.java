@@ -51,7 +51,7 @@ public class HeaderMenu implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        guiAction.sendGuiAction(GuiAction.AC.CHANGE_MENU, (GuiAction.AC)v.getTag(), v, this);
+        guiAction.sendGuiAction(GuiAction.AC.CHANGE_MENU, (GuiAction.AC)v.getTag(), v, this, null);
     }
 
     public void changeTextMenu(CharSequence text, int color)

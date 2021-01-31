@@ -22,10 +22,14 @@ public abstract class Sensor extends SelectionViewItem {
             intentFilter.add(new IntentFilter(getActionName()));
         else if(getActionNames() != null) {
             for(String action : getActionNames())
-                intentFilter.add(new IntentFilter(getActionName()));
+                intentFilter.add(new IntentFilter(action));
         }
 
         return intentFilter.toArray(new IntentFilter[intentFilter.size()]);
+    }
+
+    public void registrateCustomIntentFilter(Context context) {
+
     }
 
     public boolean validateReceive(String action) {

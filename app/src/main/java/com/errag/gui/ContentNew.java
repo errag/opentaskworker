@@ -159,7 +159,7 @@ public class ContentNew extends ContentElement implements View.OnClickListener {
                         success = false;
                     } else {
                         this.guiAction.getTaskController().editTask(task, sensors, actions);
-                        this.guiAction.sendGuiAction(GuiAction.AC.CHANGE_MENU, GuiAction.AC.CHANGE_LAYOUT_TASKS, null, null);
+                        this.guiAction.sendGuiAction(GuiAction.AC.CHANGE_MENU, GuiAction.AC.CHANGE_LAYOUT_TASKS, null, null, null);
                     }
                 }
 

@@ -1,5 +1,6 @@
 package com.errag.sensors;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.TelephonyManager;
@@ -7,6 +8,7 @@ import android.telephony.TelephonyManager;
 import com.errag.models.Parameter;
 import com.errag.models.Sensor;
 import com.errag.models.State;
+import com.errag.opentaskworker.PermissionController;
 import com.errag.opentaskworker.R;
 
 public class PhoneSensor extends Sensor {
@@ -29,6 +31,11 @@ public class PhoneSensor extends Sensor {
             state = State.Phone.CALL_STATE_RINGING;
 
         return state.toString();
+    }
+
+    @Override
+    public void askForPermissions(Activity activity) {
+        PermissionController.askForCamera(activity);
     }
 
     @Override

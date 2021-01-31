@@ -42,6 +42,8 @@
     <string name="ap_on">Hotspot ON</string>
     <string name="ap_off">Hotspot OFF</string>
 
+    <string name="app_start">App to start</string>
+
     <string name="batter_level_changed">Batterlevel changed to</string>
 
     <string name="batter_charging">Batter charching</string>
@@ -58,6 +60,7 @@
     <string name="button_call">Button CALL clicked</string>
     <string name="button_camera">Button CAMERA clicked</string>
     <string name="button_media">Button MEDIA clicked</string>
+    <string name="button_home">Button HOME</string>
 
     <string name="camera_snap">Photo taken</string>
 
@@ -78,6 +81,21 @@
     <string name="email_username">SMTP-Username</string>
     <string name="email_password">SMTP-Password</string>
 
+    <string name="file_copy">File COPY</string>
+    <string name="file_move">File MOVE</string>
+    <string name="file_directory">Directory</string>
+    <string name="file_name">Filename (* wildcard)</string>
+    <string name="file_target">Target</string>
+
+    <string name="file_delete_directory">Directory</string>
+    <string name="file_delete_filename">Filename</string>
+
+    <string name="file_write_create">File CREATE</string>
+    <string name="file_write_append">File APPEND</string>
+    <string name="file_write_directory">Directory</string>
+    <string name="file_write_filename">Filename</string>
+    <string name="file_write_text">Text</string>
+
     <string name="flash_on">Flash ON</string>
     <string name="flash_off">Flash OFF</string>
 
@@ -85,12 +103,20 @@
     <string name="gps_off">GPS OFF</string>
 
     <string name="headset_plug">Headset PLUG</string>
+    <string name="headser_unplug">Headset UNPLUG</string>
+
+    <string name="http_url">URL</string>
+    <string name="http_method">Method</string>
+    <string name="http_parameter">URL-Parameter</string>
 
     <string name="interruption_alarms">Interruption ALARM</string>
     <string name="interruption_none">Interruption NONE</string>
     <string name="interruption_all">Interruption ALL</string>
     <string name="interruption_priority">Interruption PRIORITY</string>
     <string name="interruption_unknown">Interruption UNKNOWN</string>
+
+    <string name="ip_changed">IP changed</string>
+    <string name="ip_address">New IP-address (v4)</string>
 
     <string name="notify_title">Notification Title</string>
     <string name="notify_text">Notification Content</string>
@@ -133,6 +159,7 @@
     <string name="string_input">String value</string>
 
     <string name="time_value">Time value:</string>
+    <string name="time_interval">Interval [min]:</string>
 
     <string name="usb_connected">USB connected</string>
     <string name="usb_disconnected">USB disconnected</string>

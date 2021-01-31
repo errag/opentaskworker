@@ -16,6 +16,7 @@ public class TimerController {
     private List<PendingIntent> alarmIntents = new ArrayList<>();
     private List<TimerObject> alarms = null;
 
+
     public void start(Context context, List<TimerObject> _alarms)
     {
         this.alarms = _alarms;

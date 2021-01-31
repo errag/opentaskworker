@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -11,12 +12,15 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -27,9 +31,12 @@ import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Variable;
+import com.errag.opentaskworker.MainActivity;
 import com.errag.opentaskworker.R;
+import com.google.gson.internal.bind.ArrayTypeAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -49,6 +56,9 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
     private View view = null;
     private SelectionViewItem selectionViewItem = null;
     private Boolean readonly = false;
+    private View activityListener = null;
+
+    private static ArrayList<ParameterDialog> instances = new ArrayList<>();
 
     public ParameterDialog(GuiAction _guiAction, View _view) {
         this(_guiAction, _view, false);
@@ -62,8 +72,11 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
         this.selectionViewItem.askForPermissions(this.guiAction.getActivity());
         this.parameters = this.selectionViewItem.getInputParameters();
         this.readonly = _readonly;
+        this.activityListener = null;
 
         this.setCanceledOnTouchOutside(false);
+
+        instances.add(this);
     }
 
     public ParameterDialog(@NonNull Context context) {
@@ -109,8 +122,11 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
 
         this.dismiss();
 
+        if(instances.contains(this))
+            instances.remove(this);
+
         if(this.view != null)
-            this.guiAction.sendGuiAction(GuiAction.AC.DIALOG_CLOSE, AC, this.view, null);
+            this.guiAction.sendGuiAction(GuiAction.AC.DIALOG_CLOSE, AC, this.view, null, null);
     }
 
     private void initDialog() {
@@ -126,10 +142,13 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
             if(type.equals(Parameter.Type.BOOLEAN) || type.equals(Parameter.Type.RADIO)) {
                 append = getCheckBox(parameter);
             } else if(type.equals(Parameter.Type.STRING) || type.equals(Parameter.Type.INTEGER)
-                || type.equals(Parameter.Type.DATE) || type.equals(Parameter.Type.TIME)
-                || type.equals(Parameter.Type.PASSWORD)){
+                    || type.equals(Parameter.Type.DATE) || type.equals(Parameter.Type.TIME)
+                    || type.equals(Parameter.Type.PASSWORD) || type.equals(Parameter.Type.DIRECTORY)){
                 header = getHeader(text);
                 append = getEditText(parameter);
+            } else if(type.equals(Parameter.Type.DROPDOWN)) {
+                header = getHeader(text);
+                append = getDropDown(parameter);
             }
 
             if(append != null) {
@@ -164,10 +183,12 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
                     LinearLayout layout = (LinearLayout)buttonView.getParent();
 
                     for(int i=0; i<layout.getChildCount(); i++) {
-                        CheckBox child = (CheckBox)layout.getChildAt(i);
+                        if(layout.getChildAt(i) instanceof CheckBox) {
+                            CheckBox child = (CheckBox) layout.getChildAt(i);
 
-                        if(child != checkbox && child.isChecked())
-                            child.setChecked(false);
+                            if (child != checkbox && child.isChecked())
+                                child.setChecked(false);
+                        }
                     }
                 }
             }
@@ -182,6 +203,7 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
         boolean isPassword = parameter.getType().equals(Parameter.Type.PASSWORD);
         boolean isDate = parameter.getType().equals(Parameter.Type.DATE);
         boolean isTime = parameter.getType().equals(Parameter.Type.TIME);
+        boolean isDirectory = parameter.getType().equals(Parameter.Type.DIRECTORY);
 
         if(parameter.getInput() == null)
             parameter.setInput("");
@@ -190,9 +212,9 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
         editText.setWidth((int) (250 * scale + 0.5f));
         editText.setText(parameter.getInput());
         editText.setInputType(
-            isNumber ? InputType.TYPE_CLASS_NUMBER :
-                isPassword ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD:
-                    InputType.TYPE_CLASS_TEXT
+                isNumber ? InputType.TYPE_CLASS_NUMBER :
+                        isPassword ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD:
+                                InputType.TYPE_CLASS_TEXT
         );
 
         editText.addTextChangedListener(new TextWatcher() {
@@ -214,8 +236,46 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
             setEditTextToDatePicker(editText);
         else if(isTime)
             setEditTextToTimePicker(editText);
-
+        else if(isDirectory)
+            setEditTextToDirectory(editText);
+        ;
         return editText;
+    }
+
+    private Spinner getDropDown(Parameter parameter) {
+        final Spinner spinner = new Spinner(this.getContext());
+        ArrayList<String> spinnerData = new ArrayList<>();
+        String parameterData = parameter.getData();
+
+        spinnerData.add("");
+
+        if(parameterData != null) {
+            for (String data : parameterData.split("[;]")) {
+                spinnerData.add(data);
+            }
+        }
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, spinnerData);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setTag(parameter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Parameter item = (Parameter)spinner.getTag();
+
+                if(item != null) {
+                    String value = spinner.getAdapter().getItem(position).toString();
+                    item.setInput(value);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        return spinner;
     }
 
     private TextView getHeader(String header) {
@@ -268,6 +328,14 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
                     calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false);
 
             dialog.show();
+        });
+    }
+
+    private void setEditTextToDirectory(final EditText editText) {
+        editText.setOnClickListener(v -> {
+            setActivityListenerView(v);
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            guiAction.getActivity().startActivityForResult(intent, MainActivity.REQUEST_DIRECTORY);
         });
     }
 
@@ -326,8 +394,29 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
         };
     }
 
+    public void sendToActivityListenerView(String message) {
+        if(this.activityListener != null) {
+            if(this.activityListener instanceof EditText)
+                ((EditText)this.activityListener).setText(message);
+        }
+    }
+
+    private void setActivityListenerView(View view) {
+        this.activityListener = view;
+    }
+
     @Override
     public void onClick(View v) {
 
+    }
+
+    // static methods
+    public static ParameterDialog getMainDialog() {
+        ParameterDialog dialog = null;
+
+        if(instances.size() > 0)
+            dialog = instances.get(0);
+
+        return dialog;
     }
 }

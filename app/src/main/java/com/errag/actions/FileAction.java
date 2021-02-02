@@ -31,14 +31,13 @@ public class FileAction extends Action {
         String name = getACString(State.File.FILENAME.toString(), params);
         String target = getACString(State.File.TARGET.toString(), params);
 
-        String root = Environment.getExternalStorageDirectory().toString();
-        File fileDirectory = new File(root + "/" + directory);
+        File fileDirectory = new File(directory);
         File[] files = fileDirectory.listFiles();
 
         if(files != null) {
             for (File file : files) {
                 if (file.getName().matches(name)) {
-                    File toFile = new File(root + "/" + target, file.getName());
+                    File toFile = new File(target, file.getName());
 
                     if (!file.getAbsolutePath().equals(toFile.getAbsolutePath())) {
                         if (copy) {

@@ -13,6 +13,8 @@ import android.widget.EditText;
 
 import com.errag.gui.GuiAction;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private static Intent otwIntent = null;
@@ -52,13 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         String message = null;
 
-        if (requestCode == REQUEST_DIRECTORY) {
-            if(resultCode == Activity.RESULT_OK) {
-                message = data.getDataString();
-
-                if(message.contains("%3A"))
-                    message = message.split("%3A")[1].replaceAll("%2F", "/");
-            }
+        if (requestCode == REQUEST_DIRECTORY && resultCode == Activity.RESULT_OK) {
+            message = data.getDataString().replace("file://", "");
         }
 
         if(message != null)

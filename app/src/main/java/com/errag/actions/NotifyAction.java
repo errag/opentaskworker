@@ -32,11 +32,10 @@ public class NotifyAction extends Action {
             @SuppressLint("WrongConstant")
             NotificationChannel notificationChannel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_MAX);
             notificationChannel.setDescription(channelDesc);
+            notificationChannel.enableVibration(vibration);
 
-            if(vibration) {
+            if(vibration)
                 notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-                notificationChannel.enableVibration(true);
-            }
 
             notificationManager.createNotificationChannel(notificationChannel);
         }

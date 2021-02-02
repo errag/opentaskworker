@@ -26,10 +26,8 @@ public class FileWriteAction extends Action {
         String name = getACString(State.FileWrite.FILENAME.toString(), params);
         String text = getACString(State.FileWrite.TEXT.toString(), params);
 
-
         if(write || append) {
-            String root = Environment.getExternalStorageDirectory().toString();
-            File file = new File(root + "/" + directory, name);
+            File file = new File(directory, name);
 
             if(write && file.exists())
                 file.delete();

@@ -16,8 +16,7 @@ public class FileDeleteAction extends Action {
         String directory = getACString(State.FileDelete.DIRECTORY.toString(), params);
         String name = getACString(State.FileDelete.FILENAME.toString(), params);
 
-        String root = Environment.getExternalStorageDirectory().toString();
-        File fileDirectory = new File(root + "/" + directory);
+        File fileDirectory = new File(directory);
         File[] files = fileDirectory.listFiles();
 
         if(files != null) {

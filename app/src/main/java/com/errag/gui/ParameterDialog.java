@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -27,14 +28,18 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.aditya.filebrowser.Constants;
+import com.aditya.filebrowser.FileChooser;
+import com.aditya.filebrowser.FolderChooser;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Variable;
 import com.errag.opentaskworker.MainActivity;
 import com.errag.opentaskworker.R;
-import com.google.gson.internal.bind.ArrayTypeAdapter;
 
+
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -333,8 +338,14 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
 
     private void setEditTextToDirectory(final EditText editText) {
         editText.setOnClickListener(v -> {
-            setActivityListenerView(v);
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            this.activityListener = editText;
+            // thanks to
+            // https://android-arsenal.com/details/1/5636
+
+
+            Intent intent = new Intent(getContext(), FolderChooser.class);
+            intent.putExtra(Constants.SELECTION_MODE, Constants.SELECTION_MODES.MULTIPLE_SELECTION.ordinal());
+            intent.putExtra(Constants.INITIAL_DIRECTORY, new File("content://org.nextcloud.documents/document/-2112235573%2F2").getAbsolutePath());
             guiAction.getActivity().startActivityForResult(intent, MainActivity.REQUEST_DIRECTORY);
         });
     }

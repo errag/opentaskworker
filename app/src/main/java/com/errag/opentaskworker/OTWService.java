@@ -35,6 +35,14 @@ public class OTWService extends Service {
         super.onStartCommand(intent, flags, startId);
 
         taskController = TaskController.getInstance();
+
+        try {
+            if (taskController == null)
+                taskController = TaskController.createInstance(this);
+        } catch(Exception ex) {
+
+        }
+
         this.registrateTasks();
 
         return START_STICKY;

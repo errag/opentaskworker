@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.wifi.WifiManager;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -16,14 +17,11 @@ public class APSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.AP state = State.AP.OFF;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         int apState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
+        State.AP state = (apState == 13 ? State.AP.OFF : State.AP.OFF);
 
-        if(apState == 13)
-            state = State.AP.ON;
-
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

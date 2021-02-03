@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -16,13 +17,11 @@ public class OrientationSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.Orientation state = State.Orientation.PORTRAIT;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        boolean isLandscape = context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        State.Orientation state = (!isLandscape ? State.Orientation.PORTRAIT : State.Orientation.LANDSCAPE);
 
-        if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            state = State.Orientation.LANDSCAPE;
-
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

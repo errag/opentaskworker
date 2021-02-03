@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -25,7 +26,7 @@ public class ButtonSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         State.Button state = State.Button.NONE;
 
         if(intent.getAction().equals(Intent.ACTION_CALL_BUTTON))
@@ -35,7 +36,7 @@ public class ButtonSensor extends Sensor {
         else if(intent.getAction().equals(Intent.ACTION_MEDIA_BUTTON))
             state = State.Button.MEDIA;
 
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
 

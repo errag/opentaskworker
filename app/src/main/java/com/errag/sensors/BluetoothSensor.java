@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -17,9 +18,9 @@ public class BluetoothSensor extends Sensor
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.Bluetooth state = State.Bluetooth.UNKNOWN;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         int bluetoothState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
+        State.Bluetooth state = State.Bluetooth.UNKNOWN;
 
         if(bluetoothState == BluetoothAdapter.STATE_OFF)
             state = State.Bluetooth.OFF;
@@ -27,7 +28,7 @@ public class BluetoothSensor extends Sensor
         if(bluetoothState == BluetoothAdapter.STATE_ON)
             state = State.Bluetooth.ON;
 
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

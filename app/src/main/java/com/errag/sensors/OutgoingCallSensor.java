@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -15,13 +16,13 @@ public class OutgoingCallSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        return State.OutgoingCall.ON.toString();
-    }
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        boolean result = false;
+        String number = intent.getExtras().getString("android.intent.extra.PHONE_NUMBER");;
+        result = params.testValue(State.OutgoingCall.ON.toString(), true);
+        result = params.testValue(State.OutgoingCall.NUMBER.toString(), number);
 
-    @Override
-    public String getSensorValue(Context context, Intent intent) {
-        return intent.getExtras().getString("android.intent.extra.PHONE_NUMBER");
+        return result;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class OutgoingCallSensor extends Sensor {
     public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.outgoingcall_started, State.OutgoingCall.ON.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.phone_number, null, Parameter.Type.STRING)
+                new Parameter(R.string.phone_number, State.OutgoingCall.NUMBER.toString(), Parameter.Type.STRING)
         };
     }
 }

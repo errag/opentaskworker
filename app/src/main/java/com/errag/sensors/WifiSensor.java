@@ -7,6 +7,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -18,27 +19,22 @@ public class WifiSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.Wifi state = State.Wifi.OFF;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        boolean result = false;
+        Boolean wifiState = intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, false);
+        State.Wifi state = (wifiState ? State.Wifi.ON : State.Wifi.OFF);
+        result = params.testValue(state.toString(), true);
 
-        if(intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, false))
-            state = State.Wifi.ON;
-
-        return state.toString();
-    }
-
-    @Override
-    protected String getSensorValue(Context context, Intent intent) {
-        String ssid = null;
         NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 
         if(info != null && info.isConnected()) {
             WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            ssid = wifiInfo.getSSID();
+
+            result = params.testValue(State.Wifi.SSID.toString(), wifiInfo.getSSID());
         }
 
-        return ssid;
+        return result;
     }
 
     @Override
@@ -51,7 +47,7 @@ public class WifiSensor extends Sensor {
         return new Parameter[] {
                 new Parameter(R.string.wifi_on, State.Wifi.ON.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.wifi_off, State.Wifi.OFF.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.wifi_ssid, null, Parameter.Type.STRING)
+                new Parameter(R.string.wifi_ssid, State.Wifi.SSID.toString(), Parameter.Type.STRING)
         };
     }
 }

@@ -33,6 +33,7 @@ import com.aditya.filebrowser.FileChooser;
 import com.aditya.filebrowser.FolderChooser;
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.SelectionViewItem;
 import com.errag.models.Variable;
 import com.errag.opentaskworker.MainActivity;
@@ -396,7 +397,7 @@ public class ParameterDialog extends Dialog implements View.OnClickListener {
             try {
                 if (selectionViewItem instanceof Action) {
                     Action action = (Action) selectionViewItem;
-                    action.exec(guiAction.getActivity(), selectionViewItem.getInputParameters());
+                    action.exec(guiAction.getActivity(), new ParameterContainer(selectionViewItem.getInputParameters()));
                 }
             } catch(Exception ex) {
                 // TODO error-handling

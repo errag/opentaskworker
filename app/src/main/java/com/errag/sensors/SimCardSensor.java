@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -17,20 +18,10 @@ public class SimCardSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.SimCard state = State.SimCard.UNKNOWN;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         String simState = intent.getExtras().getString(EXTRA_SIM_STATE);
 
-        if(simState.equals("LOCKED"))
-            state = State.SimCard.LOCKED;
-        else if(simState.equals("IMSI"))
-            state = State.SimCard.IMSI;
-        else if(simState.equals("LOADED"))
-            state = State.SimCard.LOADED;
-        else if(simState.equals("READY"))
-            state = State.SimCard.READY;
-
-        return state.toString();
+        return params.testValue(State.SimCard.class.getName() + "." + simState, true);
     }
 
     @Override

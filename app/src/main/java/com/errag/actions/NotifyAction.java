@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
@@ -21,10 +22,10 @@ public class NotifyAction extends Action {
     private final static String ticker = "Open Task Worker";
 
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        String title = getACString(State.Notify.TITLE.toString(), params);
-        String text = getACString(State.Notify.TEXT.toString(), params);
-        Boolean vibration = getACBoolean(State.Notify.VIBRATE.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        String title = params.getString(State.Notify.TITLE.toString());
+        String text = params.getString(State.Notify.TEXT.toString());
+        Boolean vibration = params.getBoolean(State.Notify.VIBRATE.toString());
 
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 

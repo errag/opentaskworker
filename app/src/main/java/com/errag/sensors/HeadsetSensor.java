@@ -2,9 +2,9 @@ package com.errag.sensors;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Proxy;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -16,17 +16,11 @@ public class HeadsetSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.Headset state = State.Headset.UNKNOWN;
-
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         int headsetState = intent.getIntExtra("state", -1);
+        State.Headset state = (headsetState == 0 ? State.Headset.PLUG : headsetState == 1 ? State.Headset.UNKNOWN : State.Headset.UNKNOWN);
 
-        if(headsetState == 0)
-            state = State.Headset.PLUG;
-        else if(headsetState == 1)
-            state = State.Headset.UNPLUG;
-
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

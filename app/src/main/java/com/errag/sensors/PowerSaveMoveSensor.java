@@ -8,6 +8,7 @@ import android.os.PowerManager;
 import androidx.annotation.RequiresApi;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -21,14 +22,11 @@ public class PowerSaveMoveSensor extends Sensor {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public String getState(Context context, Intent intent) {
-        State.PowerSaveMove state = State.PowerSaveMove.OFF;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        State.PowerSaveMove state = (pm.isPowerSaveMode() ? State.PowerSaveMove.ON : State.PowerSaveMove.OFF);
 
-        if(pm.isPowerSaveMode())
-            state = State.PowerSaveMove.ON;
-
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

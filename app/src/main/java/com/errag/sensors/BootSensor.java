@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -15,8 +16,8 @@ public class BootSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        return State.Boot.UP.toString();
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        return params.testValue(State.Boot.UP.toString(), true);
     }
 
     @Override

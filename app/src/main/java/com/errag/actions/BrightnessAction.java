@@ -7,14 +7,15 @@ import android.provider.Settings;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.PermissionController;
 import com.errag.opentaskworker.R;
 
 public class BrightnessAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        Integer brightness = getACInteger(State.Brightness.LEVEL.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        Integer brightness = params.getInteger(State.Brightness.LEVEL.toString());
 
         if(brightness != null) {
             ContentResolver cResolver = context.getApplicationContext().getContentResolver();

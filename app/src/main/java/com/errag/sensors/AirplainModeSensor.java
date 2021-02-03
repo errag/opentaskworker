@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -16,14 +17,11 @@ public class AirplainModeSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.AirplainMode state = State.AirplainMode.OFF;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         boolean isAirplaneMode = intent.getBooleanExtra("state", false);
+        State.AirplainMode state = (isAirplaneMode ? State.AirplainMode.ON : State.AirplainMode.OFF);
 
-        if(isAirplaneMode)
-            state = State.AirplainMode.ON;
-
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

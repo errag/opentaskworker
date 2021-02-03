@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.LocationManager;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -16,17 +17,13 @@ public class GPSSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.GPS state = State.GPS.OFF;
-
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         boolean isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        State.GPS state = (isGpsEnabled || isNetworkEnabled ? State.GPS.ON : State.GPS.OFF);
 
-        if(isGpsEnabled || isNetworkEnabled)
-            state = State.GPS.ON;
-
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

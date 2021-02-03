@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
@@ -13,8 +14,8 @@ public class DelayAction extends Action {
     }
 
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        Integer sleepTime = getACInteger(State.Delay.MS.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        Integer sleepTime = params.getInteger(State.Delay.MS.toString());
         Thread.sleep(sleepTime);
 
         return true;

@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -25,23 +26,23 @@ public class TimeSensor extends Sensor {
     }
 
     @Override
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        return false;
+    }
+
+    @Override
     public boolean isActive() {
         return false;
     }
 
     @Override
     public void registrateCustomIntentFilter(Context context) {
-        int repeatInterval = Action.getACInteger(State.TIME.INTERVAL.toString(), this.getInputParameters());
+        int repeatInterval = 0; //Action.getACInteger(State.TIME.INTERVAL.toString(), this.getInputParameters());
 
         if(alarmManager != null && alarmManager != null)
             alarmManager.cancel(alarmIntent);
         else
             alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-    }
-
-    @Override
-    public String getState(Context context, Intent intent) {
-        return null;
     }
 
     @Override

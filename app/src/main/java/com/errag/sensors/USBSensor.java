@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -15,13 +16,11 @@ public class USBSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        State.USB state = State.USB.DISCONNECTED;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        boolean usbState = intent.getExtras().getBoolean("connected");
+        State.USB state = (usbState ? State.USB.CONNECTED : State.USB.DISCONNECTED);
 
-        if(intent.getExtras().getBoolean("connected"))
-            state = State.USB.CONNECTED;
-
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

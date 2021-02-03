@@ -8,6 +8,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -20,7 +21,7 @@ public class InterruptionSensor extends Sensor {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public String getState(Context context, Intent intent) {
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         State.Interruption state = State.Interruption.NOT_RESOLVEABLE;
         NotificationManager notifi = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -35,7 +36,7 @@ public class InterruptionSensor extends Sensor {
         else if (notifi.getCurrentInterruptionFilter() == NotificationManager.INTERRUPTION_FILTER_UNKNOWN)
             state = State.Interruption.UNKNOWN;
 
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

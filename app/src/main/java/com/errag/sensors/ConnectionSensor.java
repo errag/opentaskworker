@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -17,7 +18,7 @@ public class ConnectionSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
         State.Connection state = State.Connection.NOT_CONNECTED;
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -29,7 +30,7 @@ public class ConnectionSensor extends Sensor {
                 state = State.Connection.MOBILE_DATA;
         }
 
-        return state.toString();
+        return params.testValue(state.toString(), true);
     }
 
     @Override

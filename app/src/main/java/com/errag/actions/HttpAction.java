@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.errag.models.Action;
 import com.errag.models.HttpAsync;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
@@ -20,10 +21,10 @@ public class HttpAction extends Action {
     private final static String HTTP_METHODS = "GET;POST;DELETE;PUT;HEAD;CONNECT;OPTIONS;TRACE;PATCH";
 
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        String url = getACString(State.Http.URL.toString(), params);
-        String method = getACString(State.Http.METHOD.toString(), params);
-        String data = getACString(State.Http.PARAMS.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        String url = params.getString(State.Http.URL.toString());
+        String method = params.getString(State.Http.METHOD.toString());
+        String data = params.getString(State.Http.PARAMS.toString());
 
         new HttpAsync(url, method, data).execute();
 

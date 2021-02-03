@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.BatteryManager;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -17,17 +18,17 @@ public class BatteryLevelSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        return State.BatteryLevel.CHANGED.toString();
-    }
-
-    @Override
-    public String getSensorValue(Context context, Intent intent) {
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        boolean result = false;
         int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         float batteryPct = level * 100 / (float)scale;
+        String batteryLevel = String.valueOf(batteryPct);
 
-        return String.valueOf(batteryPct);
+        result = params.testValue(State.BatteryLevel.CHANGED.toString(), true);
+        result = params.testValue(State.BatteryLevel.VALUE.toString(), batteryLevel);
+
+        return result;
     }
 
     @Override

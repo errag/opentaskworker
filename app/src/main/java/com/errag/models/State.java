@@ -39,7 +39,8 @@ public enum State
     }
 
     public enum BatteryLevel {
-        CHANGED;
+        CHANGED,
+        VALUE;
 
         @NonNull
         @Override
@@ -285,7 +286,8 @@ public enum State
     }
 
     public enum OutgoingCall {
-        ON;
+        ON,
+        NUMBER;
 
         @NonNull
         @Override
@@ -298,7 +300,8 @@ public enum State
         UNKNOWN,
         CALL_STATE_IDLE,
         CALL_STATE_OFFHOOK,
-        CALL_STATE_RINGING;
+        CALL_STATE_RINGING,
+        NUMBER;
 
         @NonNull
         @Override
@@ -365,6 +368,7 @@ public enum State
     public enum SMS {
         RECEIVED,
         SEND_TO,
+        NUMBER,
         MESSAGE;
 
         @NonNull

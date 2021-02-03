@@ -31,7 +31,7 @@ public abstract class Variable extends SelectionViewItem {
     }
 
     public String getVariableName() {
-        return Action.getACString(VARIABLE.NAME.toString(), this.inputParameter);
+        return new ParameterContainer(this.inputParameter).getString(VARIABLE.NAME.toString());
     }
 
     public enum DATE {

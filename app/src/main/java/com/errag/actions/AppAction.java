@@ -10,6 +10,7 @@ import android.content.pm.ResolveInfo;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.MainActivity;
 import com.errag.opentaskworker.PermissionController;
@@ -20,8 +21,8 @@ import java.util.List;
 
 public class AppAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        String packageName = getACString(State.APP.START.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        String packageName = params.getString(State.APP.START.toString());
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
 
         if(intent != null) {

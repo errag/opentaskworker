@@ -6,15 +6,16 @@ import android.telephony.SmsManager;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.PermissionController;
 import com.errag.opentaskworker.R;
 
 public class SMSAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        String phoneNumber = getACString(State.SMS.SEND_TO.toString(), params);
-        String smsMessage = getACString(State.SMS.MESSAGE.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        String phoneNumber = params.getString(State.SMS.SEND_TO.toString());
+        String smsMessage = params.getString(State.SMS.MESSAGE.toString());
 
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(phoneNumber, null, smsMessage, null, null);

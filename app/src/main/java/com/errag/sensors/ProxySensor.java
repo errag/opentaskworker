@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Proxy;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -16,8 +17,8 @@ public class ProxySensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        return State.Proxy.CHANGED.toString();
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        return params.testValue(State.Proxy.CHANGED.toString(), true);
     }
 
     @Override

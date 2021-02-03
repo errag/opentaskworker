@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -24,15 +25,11 @@ public class ScreenSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        String state = null;
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        Boolean screenState = intent.getAction().equals(Intent.ACTION_SCREEN_ON);
+        String state = (screenState ? State.ScreenOn.ON : State.ScreenOff.OFF).toString();
 
-        if(intent.getAction().equals(Intent.ACTION_SCREEN_ON))
-            state = State.ScreenOn.ON.toString();
-        else
-            state = State.ScreenOff.OFF.toString();
-
-        return state;
+        return params.testValue(state, true);
     }
 
     @Override

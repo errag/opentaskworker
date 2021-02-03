@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.telephony.TelephonyManager;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.PermissionController;
@@ -19,9 +20,11 @@ public class PhoneSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        boolean result = false;
         State.Phone state = State.Phone.UNKNOWN;
         String phoneState = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
+        String number = intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
         if(phoneState.equals(TelephonyManager.EXTRA_STATE_IDLE))
             state = State.Phone.CALL_STATE_IDLE;
@@ -30,17 +33,15 @@ public class PhoneSensor extends Sensor {
         else if(phoneState.equals(TelephonyManager.EXTRA_STATE_RINGING))
             state = State.Phone.CALL_STATE_RINGING;
 
-        return state.toString();
+        result = params.testValue(state.toString(), true);
+        result = params.testValue(State.Phone.NUMBER.toString(), number);
+
+        return result;
     }
 
     @Override
     public void askForPermissions(Activity activity) {
         PermissionController.askForCamera(activity);
-    }
-
-    @Override
-    public String getSensorValue(Context context, Intent intent) {
-        return intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class PhoneSensor extends Sensor {
                 new Parameter(R.string.phone_idle, State.Phone.CALL_STATE_IDLE.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.phone_ringing, State.Phone.CALL_STATE_RINGING.toString(), Parameter.Type.BOOLEAN),
                 new Parameter(R.string.phone_offhock, State.Phone.CALL_STATE_OFFHOOK.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.phone_number, null, Parameter.Type.STRING)
+                new Parameter(R.string.phone_number, State.Phone.NUMBER.toString(), Parameter.Type.STRING)
         };
     }
 }

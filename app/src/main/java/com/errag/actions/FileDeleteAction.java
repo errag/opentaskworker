@@ -5,6 +5,7 @@ import android.os.Environment;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
@@ -12,9 +13,9 @@ import java.io.File;
 
 public class FileDeleteAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        String directory = getACString(State.FileDelete.DIRECTORY.toString(), params);
-        String name = getACString(State.FileDelete.FILENAME.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        String directory = params.getString(State.FileDelete.DIRECTORY.toString());
+        String name = params.getString(State.FileDelete.FILENAME.toString());
 
         File fileDirectory = new File(directory);
         File[] files = fileDirectory.listFiles();

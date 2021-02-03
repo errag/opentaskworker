@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
@@ -17,7 +18,7 @@ import java.io.FileOutputStream;
 
 public class ScreenshotAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
 
         View v1 = ((Activity)context).getWindow().getDecorView().getRootView();
         v1.setDrawingCacheEnabled(true);

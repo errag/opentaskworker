@@ -7,13 +7,14 @@ import android.os.Vibrator;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
 public class VibratorAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        Integer vibratorMS = getACInteger(State.Vibrator.MS.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        Integer vibratorMS = params.getInteger(State.Vibrator.MS.toString());
 
         Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 

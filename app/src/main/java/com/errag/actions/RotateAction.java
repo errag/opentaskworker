@@ -6,15 +6,16 @@ import android.content.pm.ActivityInfo;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
 public class RotateAction extends Action {
 
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        boolean orientationPortrait = getACBoolean(State.Orientation.PORTRAIT.toString(), params);
-        boolean orientationLandscape = getACBoolean(State.Orientation.LANDSCAPE.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        boolean orientationPortrait = params.getBoolean(State.Orientation.PORTRAIT.toString());
+        boolean orientationLandscape = params.getBoolean(State.Orientation.LANDSCAPE.toString());
 
         if(orientationPortrait)
             ((Activity)context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

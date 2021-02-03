@@ -7,13 +7,14 @@ import android.content.Intent;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
 public class ButtonAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        boolean buttonHome = getACBoolean(State.Button.HOME.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        boolean buttonHome = params.getBoolean(State.Button.HOME.toString());
 
         if(buttonHome) {
             Intent startMain = new Intent(Intent.ACTION_MAIN);

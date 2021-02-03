@@ -7,6 +7,7 @@ import android.os.FileUtils;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.PermissionController;
 import com.errag.opentaskworker.R;
@@ -24,12 +25,12 @@ import java.nio.file.StandardCopyOption;
 
 public class FileAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        Boolean copy = getACBoolean(State.File.COPY.toString(), params);
-        Boolean move = getACBoolean(State.File.MOVE.toString(), params);
-        String directory = getACString(State.File.DIRECTORY.toString(), params);
-        String name = getACString(State.File.FILENAME.toString(), params);
-        String target = getACString(State.File.TARGET.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        Boolean copy = params.getBoolean(State.File.COPY.toString());
+        Boolean move = params.getBoolean(State.File.MOVE.toString());
+        String directory = params.getString(State.File.DIRECTORY.toString());
+        String name = params.getString(State.File.FILENAME.toString());
+        String target = params.getString(State.File.TARGET.toString());
 
         File fileDirectory = new File(directory);
         File[] files = fileDirectory.listFiles();

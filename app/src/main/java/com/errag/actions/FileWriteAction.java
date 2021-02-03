@@ -7,6 +7,7 @@ import android.os.FileUtils;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.PermissionController;
 import com.errag.opentaskworker.R;
@@ -17,14 +18,14 @@ import java.io.OutputStreamWriter;
 
 public class FileWriteAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
         boolean result = true;
 
-        Boolean write = getACBoolean(State.FileWrite.WRITE.toString(), params);
-        Boolean append = getACBoolean(State.FileWrite.APPEND.toString(), params);
-        String directory = getACString(State.FileWrite.DIRECTORY.toString(), params);
-        String name = getACString(State.FileWrite.FILENAME.toString(), params);
-        String text = getACString(State.FileWrite.TEXT.toString(), params);
+        Boolean write = params.getBoolean(State.FileWrite.WRITE.toString());
+        Boolean append = params.getBoolean(State.FileWrite.APPEND.toString());
+        String directory = params.getString(State.FileWrite.DIRECTORY.toString());
+        String name = params.getString(State.FileWrite.FILENAME.toString());
+        String text = params.getString(State.FileWrite.TEXT.toString());
 
         if(write || append) {
             File file = new File(directory, name);

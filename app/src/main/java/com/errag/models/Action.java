@@ -9,10 +9,10 @@ public abstract class Action extends SelectionViewItem {
         TOGGLE
     }
 
-    public abstract boolean exec(Context context, Parameter[] params) throws Exception;
+    public abstract boolean exec(Context context, ParameterContainer params) throws Exception;
 
     public boolean exec(Context context) throws Exception {
-        return this.exec(context, this.getInputParameters());
+        return this.exec(context, new ParameterContainer(this.getInputParameters()));
     }
 
     // static methods
@@ -23,34 +23,5 @@ public abstract class Action extends SelectionViewItem {
         _action.resetInputParameter();
 
         return actionClone;
-    }
-
-    public static String getACString(String state, Parameter[] parameters) {
-        String input = null;
-
-        for(Parameter parameter : parameters)
-        {
-            if(parameter.getValue().equals(state))
-            {
-                input = parameter.getInput();
-                break;
-            }
-        }
-
-        return input;
-    }
-
-    public static Integer getACInteger(String state, Parameter[] parameters) {
-        Integer input = null;
-        String inputString = Action.getACString(state, parameters);
-
-        if(inputString != null)
-            input = Integer.parseInt(inputString);
-
-        return input;
-    }
-
-    public static Boolean getACBoolean(String state, Parameter[] parameters) {
-        return Boolean.parseBoolean(Action.getACString(state, parameters));
     }
 }

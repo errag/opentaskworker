@@ -6,6 +6,7 @@ import android.net.wifi.WifiManager;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.PermissionController;
 import com.errag.opentaskworker.R;
@@ -16,7 +17,7 @@ public class WifiAction extends Action {
     }
 
     @Override
-    public boolean exec(Context context, Parameter[] params) {
+    public boolean exec(Context context, ParameterContainer params) {
         boolean result = false;
 
         // get wifi adapter
@@ -24,9 +25,9 @@ public class WifiAction extends Action {
         boolean wifiEnabled = wifiManager.isWifiEnabled();
 
         // get parameter
-        boolean turnOn = getACBoolean(State.Wifi.ON.toString(), params);
-        boolean turnOff = getACBoolean(State.Wifi.OFF.toString(), params);
-        boolean turnToggle = getACBoolean(State.Wifi.TOGGLE.toString(), params);
+        boolean turnOn = params.getBoolean(State.Wifi.ON.toString());
+        boolean turnOff = params.getBoolean(State.Wifi.OFF.toString());
+        boolean turnToggle = params.getBoolean(State.Wifi.TOGGLE.toString());
 
         // do action
         if(turnOn || (turnToggle && !wifiEnabled))

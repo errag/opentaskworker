@@ -8,14 +8,15 @@ import android.view.WindowManager;
 
 import com.errag.models.Action;
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
 
 public class ScreenAction extends Action {
     @Override
-    public boolean exec(Context context, Parameter[] params) throws Exception {
-        boolean screenOn = getACBoolean(State.ScreenOn.ON.toString(), params);
-        boolean screenOff = getACBoolean(State.ScreenOff.OFF.toString(), params);
+    public boolean exec(Context context, ParameterContainer params) throws Exception {
+        boolean screenOn = params.getBoolean(State.ScreenOn.ON.toString());
+        boolean screenOff = params.getBoolean(State.ScreenOff.OFF.toString());
 
         if(screenOn) {
             final Window window = ((Activity)context).getWindow();

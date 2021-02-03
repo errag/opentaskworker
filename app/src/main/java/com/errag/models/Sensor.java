@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public abstract class Sensor extends SelectionViewItem {
 
     public abstract String getActionName();
-    public abstract String getState(Context context, Intent intent);
+    public abstract boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params);
 
     public String[] getActionNames() {
         return null;
@@ -32,18 +32,8 @@ public abstract class Sensor extends SelectionViewItem {
 
     }
 
-    public boolean validateReceive(String action) {
-        return action.equals(getActionName());
-    }
-
-    public boolean isAction(String _action) { return getActionName().equals(_action); }
-
-    protected String getSensorValue(Context context, Intent intent) {
-        return null;
-    }
-
     public boolean isSensorTrigger(Context context, Intent intent) {
-        return Action.getACBoolean(this.getState(context, intent), this.getInputParameters());
+        return getStateFromIntent(context, intent, new ParameterContainer(this.getInputParameters()));
     }
 
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 
 import com.errag.models.Parameter;
+import com.errag.models.ParameterContainer;
 import com.errag.models.Sensor;
 import com.errag.models.State;
 import com.errag.opentaskworker.R;
@@ -17,12 +18,10 @@ public class SMSSensor extends Sensor {
     }
 
     @Override
-    public String getState(Context context, Intent intent) {
-        return State.SMS.RECEIVED.toString();
-    }
+    public boolean getStateFromIntent(Context context, Intent intent, ParameterContainer params) {
+        boolean result = params.testValue(State.SMS.RECEIVED.toString(), true);
 
-    @Override
-    public String getSensorValue(Context context, Intent intent) {
+        // check for number
         Bundle bundle = intent.getExtras();
         String senderNumber = null;
 
@@ -30,9 +29,11 @@ public class SMSSensor extends Sensor {
             Object[] pdus = (Object[]) bundle.get("pdus");
             SmsMessage sms = SmsMessage.createFromPdu((byte[]) pdus[0]);
             senderNumber = sms.getOriginatingAddress();
+
+            result = params.testValue(State.SMS.NUMBER.toString(), senderNumber);
         }
 
-        return senderNumber;
+        return result;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class SMSSensor extends Sensor {
     public Parameter[] setDialogInputParameter() {
         return new Parameter[] {
                 new Parameter(R.string.sms_received, State.SMS.RECEIVED.toString(), Parameter.Type.BOOLEAN),
-                new Parameter(R.string.sms_number, null, Parameter.Type.STRING)
+                new Parameter(R.string.sms_number, State.SMS.NUMBER.toString(), Parameter.Type.STRING)
         };
     }
 }
